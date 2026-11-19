@@ -1,6 +1,7 @@
 import { Link, Outlet, useLocation, useNavigate, useSearch } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { labels, type Locale } from "../data/labels";
+import { ArchiveGate } from "./archive-gate";
 
 const SiteContext = createContext<{
   t: typeof labels.en;
@@ -145,6 +146,7 @@ export function SiteLayout() {
           <footer>
             <p>{t.footerLine}</p>
             <a href="https://github.com/IloveNooodles/gawrgare-v3">{t.viewSource}</a>
+            <ArchiveGate />
             <span className="footer-signoff">
               {t.oneThing} {t.atATime} ✦
             </span>

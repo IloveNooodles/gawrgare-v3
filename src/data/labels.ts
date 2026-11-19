@@ -59,6 +59,15 @@ const en = {
   originalPost: "Read the original on Money Forward Developers Blog",
   inThisPost: "In this post",
   postNotFound: "That post is not in the archive.",
+  archiveTrigger: "Enter the archive",
+  archiveEyebrow: "THE PALACE GATE",
+  archiveTitle: "CHOOSE YOUR TIMELINE",
+  archiveClose: "Close",
+  archiveHint: "Two doors, two older versions of this corner of the internet.",
+  archiveVersion1: "Version 1",
+  archiveVersion2: "Version 2",
+  archiveVersion1Note: "The original blog",
+  archiveVersion2Note: "The previous site",
 };
 
 const id: typeof en = {
@@ -122,6 +131,15 @@ const id: typeof en = {
   originalPost: "Baca versi asli di Money Forward Developers Blog",
   inThisPost: "Dalam tulisan ini",
   postNotFound: "Tulisan itu tidak ada di arsip.",
+  archiveTrigger: "Masuk arsip",
+  archiveEyebrow: "GERBANG ISTANA",
+  archiveTitle: "PILIH GARIS WAKTU",
+  archiveClose: "Tutup",
+  archiveHint: "Dua pintu, dua versi lama dari sudut internet ini.",
+  archiveVersion1: "Versi 1",
+  archiveVersion2: "Versi 2",
+  archiveVersion1Note: "Blog awal",
+  archiveVersion2Note: "Situs sebelumnya",
 };
 
 const ja: typeof en = {
@@ -184,6 +202,15 @@ const ja: typeof en = {
   originalPost: "Money Forward Developers Blog の原文を読む",
   inThisPost: "この記事の内容",
   postNotFound: "その記事はアーカイブにありません。",
+  archiveTrigger: "アーカイブへ",
+  archiveEyebrow: "パレスの門",
+  archiveTitle: "タイムラインを選ぶ",
+  archiveClose: "閉じる",
+  archiveHint: "二つの扉、この居場所の古い二つのバージョン。",
+  archiveVersion1: "バージョン1",
+  archiveVersion2: "バージョン2",
+  archiveVersion1Note: "最初のブログ",
+  archiveVersion2Note: "前のサイト",
 };
 
 export const labels = { en, id, ja };

@@ -591,6 +591,172 @@ footer > a:not(.wordmark) {
   font-weight: 900;
   letter-spacing: 0.1em;
 }
+.archive-trigger {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.6rem 0.9rem;
+  text-transform: uppercase;
+}
+.archive-trigger::before {
+  content: "✦";
+  color: var(--red);
+  margin-right: 0.5rem;
+}
+.archive-trigger:is(:hover, :focus-visible) {
+  border-color: var(--red);
+  color: var(--paper);
+}
+.archive-gate {
+  width: min(900px, 92vw);
+  max-width: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--paper);
+  overflow: visible;
+}
+.archive-gate::backdrop {
+  background: rgb(17 17 19 / 94%);
+  animation: archive-backdrop 0.35s ease-out both;
+}
+.archive-panel {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: var(--ink);
+  border: 2px solid var(--paper);
+  box-shadow: 14px 14px 0 var(--red);
+  rotate: -1deg;
+}
+.archive-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(-45deg, transparent 0 14px, rgb(232 25 50 / 12%) 14px 28px);
+  clip-path: polygon(0 0, 88% 0, 100% 100%, 12% 100%);
+}
+.archive-gate[open] .archive-panel {
+  animation: archive-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.archive-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.archive-heading h2 {
+  font-family: Paytone, sans-serif;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  line-height: 1;
+  margin: 0.4rem 0 0;
+}
+.archive-close {
+  margin-left: auto;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.4rem 0.75rem;
+}
+.archive-hint {
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 1rem 0 0;
+  max-width: 40rem;
+}
+.archive-doors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.archive-door {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 200px;
+  padding: 1.5rem;
+  background: var(--paper);
+  border: 2px solid var(--paper);
+  color: var(--ink);
+  rotate: -2deg;
+}
+.archive-door:nth-child(2) {
+  background: var(--red);
+  border-color: var(--red);
+  rotate: 2deg;
+}
+.archive-door:is(:hover, :focus-visible) {
+  scale: 1.02;
+}
+.door-number {
+  font-family: Paytone, sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+}
+.archive-door strong {
+  font-size: 1.25rem;
+}
+.archive-door > span:last-child {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-top: auto;
+  text-transform: uppercase;
+}
+.archive-gate[open] .archive-door:nth-child(1) {
+  animation: archive-door-left 0.45s 0.16s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.archive-gate[open] .archive-door:nth-child(2) {
+  animation: archive-door-right 0.45s 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes archive-backdrop {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes archive-enter {
+  from {
+    opacity: 0;
+    scale: 0.85;
+    rotate: 4deg;
+  }
+}
+@keyframes archive-door-left {
+  from {
+    opacity: 0;
+    translate: -80px 0;
+    rotate: 12deg;
+  }
+}
+@keyframes archive-door-right {
+  from {
+    opacity: 0;
+    translate: 80px 0;
+    rotate: -12deg;
+  }
+}
+@media (max-width: 700px) {
+  .archive-doors {
+    grid-template-columns: 1fr;
+  }
+  .archive-door {
+    min-height: 150px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .archive-gate::backdrop,
+  .archive-gate[open] .archive-panel,
+  .archive-gate[open] .archive-door {
+    animation: none !important;
+  }
+}
 @media (min-width: 1440px) {
   .hero-inner {
     min-height: 660px;
