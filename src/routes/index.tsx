@@ -14,6 +14,7 @@ const labels = {
     experiences: "Experience",
     awards: "Awards",
     engineer: "Software engineer",
+    present: "Present",
     intro: "A little bit of code. A little bit of chaos.",
     explore: "Explore my work",
     dossier: "Behind the code",
@@ -26,6 +27,7 @@ const labels = {
     experiences: "Pengalaman",
     awards: "Prestasi",
     engineer: "Programmer",
+    present: "Sekarang",
     intro: "Sedikit kode. Sedikit kekacauan.",
     explore: "Jelajahi karya saya",
     dossier: "Di balik kode",
@@ -38,6 +40,7 @@ const labels = {
     experiences: "経験",
     awards: "賞",
     engineer: "エンジニア",
+    present: "現在",
     intro: "少しのコード。少しのカオス。",
     explore: "作品を見る",
     dossier: "コードの向こう側",
@@ -50,26 +53,29 @@ export function Home() {
   const animationRoot = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState<keyof typeof labels>("en");
   const [query, setQuery] = useState("");
+  const [intro, setIntro] = useState(0);
+  const [motionPaused, setMotionPaused] = useState(false);
   const t = labels[locale];
   const projects = searchProjects(query);
 
   useScopeMotion(
     animationRoot,
     () => {
+      if (motionPaused) return;
       animate(
         ".hero-copy > .eyebrow, .hero h1 > span, .hero-intro, .action-link",
-        { x: [-48, 0], opacity: [0, 1] },
-        { delay: stagger(0.075), duration: 0.45 },
+        { x: [-120, 8, 0], opacity: [0, 1, 1] },
+        { delay: stagger(0.12, { startDelay: 0.3 }), duration: 0.6 },
       );
       animate(
         ".hero-art",
         { x: [64, 0], rotate: [-12, 3, 0], scale: [0.8, 1.03, 1], opacity: [0, 1] },
-        { delay: 0.2, duration: 0.8 },
+        { delay: 0.45, duration: 1 },
       );
       animate(
         ".section-nav a",
         { y: [16, 0], opacity: [0, 1] },
-        { delay: stagger(0.06, { startDelay: 0.5 }), duration: 0.3 },
+        { delay: stagger(0.08, { startDelay: 0.8 }), duration: 0.4 },
       );
       inView(
         ".section-heading, .about-layout, .experience-row, .award-row",
@@ -81,12 +87,18 @@ export function Home() {
     },
     {
       matchMedia: "(prefers-reduced-motion: no-preference)",
+      deps: [intro, motionPaused],
       transition: { ease: [0.16, 1, 0.3, 1] },
     },
   );
 
   return (
-    <div className="site-shell" lang={locale} ref={animationRoot}>
+    <div
+      className="site-shell"
+      lang={locale}
+      ref={animationRoot}
+      data-motion={motionPaused ? "paused" : "playing"}
+    >
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -109,6 +121,7 @@ export function Home() {
       </header>
       <main id="main">
         <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-swipe" key={intro} aria-hidden="true" />
           <div className="hero-dots" aria-hidden="true" />
           <div className="hero-inner">
             <div className="hero-copy">
@@ -116,14 +129,13 @@ export function Home() {
                 <span className="tiny-star">✦</span> {t.engineer} / CTF player
               </p>
               <h1 id="hero-title">
-                <span>TAKE YOUR</span>
+                <span>ONE THING</span>
                 <span className="cutout">
-                  TIME
+                  AT A TIME.
                   <span className="title-star" aria-hidden="true">
                     ★
                   </span>
                 </span>
-                <span className="outline-title">MAKE IT COUNT.</span>
               </h1>
               <p className="hero-intro">
                 Hey, I’m <strong>Gare.</strong>
@@ -133,6 +145,20 @@ export function Home() {
               <a className="action-link" href="#projects">
                 {t.explore} <span aria-hidden="true">✦</span>
               </a>
+              <p className="reduced-motion-note">
+                Reduced motion is enabled in your system settings.
+              </p>
+              <div className="motion-controls">
+                <button disabled={motionPaused} onClick={() => setIntro((value) => value + 1)}>
+                  Replay intro
+                </button>
+                <button
+                  aria-pressed={motionPaused}
+                  onClick={() => setMotionPaused((value) => !value)}
+                >
+                  {motionPaused ? "Resume motion" : "Pause motion"}
+                </button>
+              </div>
             </div>
             <div className="hero-art" aria-hidden="true">
               <div className="orbit orbit-one" />
@@ -192,7 +218,11 @@ export function Home() {
                 <br />
                 ER Rahman
               </h3>
-              <p>{t.engineer}</p>
+              <p>
+                Software Engineer III
+                <br />
+                Money Forward · Tokyo, Japan
+              </p>
               <div className="identity-tags">
                 <span>Backend</span>
                 <span>Infrastructure</span>
@@ -206,16 +236,22 @@ export function Home() {
                 behind the experience.
               </p>
               <p>
-                I specialize in building robust backend systems, managing infrastructure, and
-                handling deployments through Kubernetes. Although my main focus is on backend
-                development, I’m also comfortable with frontend work.
+                I’m a Software Engineer III at Money Forward in Tokyo, Japan. I specialize in
+                backend systems, infrastructure, and Kubernetes deployments, and I’m comfortable
+                working across the frontend too.
               </p>
               <p>
-                From payment integrations at <a href="https://www.makmur.id">Makmur</a> and
-                ecommerce at <a href="https://www.sayurbox.com">Sayurbox</a> to scalable game
-                backends at <a href="https://garena.com">Garena</a> and full-stack infrastructure at{" "}
-                <a href="https://www.matchmade.io">Matchmade</a>, I like making complicated things
-                work.
+                My work spans financial data systems and compliance at Money Forward, engineering
+                leadership and infrastructure at <a href="https://www.matchmade.io">MatchMade</a>,
+                payment integrations at <a href="https://www.makmur.id">Makmur</a>, ecommerce at{" "}
+                <a href="https://www.sayurbox.com">Sayurbox</a>, and game backends at{" "}
+                <a href="https://garena.com">Garena</a>.
+              </p>
+              <p>
+                I studied computer science at Institut Teknologi Bandung from 2020 to 2024,
+                graduating cum laude with a GPA of 3.88/4. I also write about Kubernetes, homelabs,
+                and development tools, and collect notes in my{" "}
+                <a href="https://garden.mgarebaldhie.com">digital garden</a>.
               </p>
               <p>
                 Off the clock? CTF challenges, Pokémon, Monster Hunter, Monogatari, and Steins;Gate.
@@ -291,12 +327,20 @@ export function Home() {
               {t.experiences}
               <span>.</span>
             </h2>
+            <a
+              className="experience-details"
+              href="https://www.linkedin.com/in/garebaldhie/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Full work history on LinkedIn
+            </a>
           </div>
           <div className="experience-list">
             {experiences.map((experience) => (
               <article className="experience-row" key={experience.name}>
                 <p className="experience-date">
-                  {experience.year_start} — {experience.year_end}
+                  {experience.year_start} — {experience.year_end ?? t.present}
                 </p>
                 <div>
                   <h3>
@@ -305,7 +349,11 @@ export function Home() {
                     </a>
                   </h3>
                   <p className="role-title">{experience.title}</p>
-                  <p>{experience.description}</p>
+                  <ul className="experience-points">
+                    {experience.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
                   <div className="project-tags">
                     {experience.tag.map((tag) => (
                       <span key={tag}>{tag}</span>
@@ -352,7 +400,7 @@ export function Home() {
         </a>
         <p>Always learning. Always building.</p>
         <a href="https://github.com/IloveNooodles/gawrgare-v3">View source</a>
-        <span className="footer-signoff">TAKE YOUR TIME. ✦</span>
+        <span className="footer-signoff">ONE THING AT A TIME. ✦</span>
       </footer>
     </div>
   );

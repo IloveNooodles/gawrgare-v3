@@ -13,12 +13,12 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Gare — Software Engineer & CTF Player",
+        title: "Gare — Software Engineer III & CTF Player",
       },
       {
         name: "description",
         content:
-          "Muhammad Garebaldhie ER Rahman. Software engineer building backend systems, infrastructure, and things worth exploring.",
+          "Muhammad Garebaldhie ER Rahman. Software Engineer III at Money Forward in Tokyo, building backend systems and infrastructure. CTF player and homelab enthusiast.",
       },
       { name: "theme-color", content: "#e81932" },
     ],

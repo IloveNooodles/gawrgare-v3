@@ -174,11 +174,6 @@ input:focus-visible {
   margin-left: 0.3em;
   transform: rotate(10deg);
 }
-.hero h1 .outline-title {
-  font-size: 0.48em;
-  letter-spacing: 0.005em;
-  color: var(--ink);
-}
 .hero-intro {
   line-height: 1.75;
   font-size: 1rem;
@@ -560,6 +555,29 @@ input:focus-visible {
   color: var(--paper);
   font-weight: 700;
 }
+.experience-details {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.experience-points {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin: 1rem 0;
+  max-width: 750px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.experience-points li + li {
+  margin-top: 0.5rem;
+}
+.experience-points li::marker {
+  color: var(--red);
+}
 .experience-row .experience-date {
   font-size: 0.875rem;
   font-weight: 800;
@@ -896,5 +914,115 @@ footer > a:not(.wordmark) {
   to {
     rotate: 0deg;
     scale: 1;
+  }
+}
+
+.hero-swipe {
+  display: none;
+}
+.motion-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.motion-controls button {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid currentColor;
+  padding: 0.6rem 0.8rem;
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+.motion-controls button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.motion-controls button:focus-visible {
+  outline-color: var(--ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-swipe {
+    display: block;
+    position: absolute;
+    inset: -30% -40%;
+    z-index: 5;
+    pointer-events: none;
+    background: var(--ink);
+    border-inline: 1.5rem solid var(--paper);
+    transform: translateX(-130%) skewX(-18deg);
+    animation: phantom-wipe 0.9s cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+  .hero-dots {
+    animation: halftone-drift 1s steps(5) infinite;
+  }
+  .art-star {
+    animation: star-jolt 3.6s steps(2, end) infinite;
+  }
+  .star-back {
+    animation-direction: reverse;
+  }
+  .calling-card {
+    animation: card-float 4s ease-in-out infinite;
+  }
+  .site-shell[data-motion="paused"] *,
+  .site-shell[data-motion="paused"] *::before,
+  .site-shell[data-motion="paused"] *::after {
+    animation-play-state: paused !important;
+  }
+  .site-shell[data-motion="paused"] .hero-swipe {
+    display: none;
+  }
+}
+@keyframes phantom-wipe {
+  from {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(130%) skewX(-18deg);
+  }
+}
+@keyframes halftone-drift {
+  to {
+    background-position: 10px 5px;
+  }
+}
+@keyframes star-jolt {
+  0%,
+  100% {
+    rotate: -4deg;
+    scale: 0.98;
+  }
+  45% {
+    rotate: 5deg;
+    scale: 1.04;
+  }
+  65% {
+    rotate: 1deg;
+    scale: 1;
+  }
+}
+@keyframes card-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+.reduced-motion-note {
+  display: none;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-controls {
+    display: none;
+  }
+  .reduced-motion-note {
+    display: block;
   }
 }
