@@ -181,21 +181,23 @@ it("shows featured projects by default and searches the full repository collecti
 it.each([
   { to: "/experience", selector: ".experience-row", transform: /translateX/ },
   { to: "/projects", selector: ".project-row", transform: /scale/ },
+  { to: "/blog", selector: ".blog-row", transform: /translateY/ },
   { to: "/awards", selector: ".award-row", transform: /rotate/ },
-] satisfies { to: "/experience" | "/projects" | "/awards"; selector: string; transform: RegExp }[])(
-  "animates $to with its own entrance",
-  async ({ to, selector, transform }) => {
-    await act(async () => {
-      await router.navigate({ to });
-    });
-    await act(async () => new Promise((resolve) => setTimeout(resolve, 60)));
-    const animations = container.querySelector(selector)?.getAnimations() ?? [];
-    const frames = animations.flatMap((animation) =>
-      animation.effect instanceof KeyframeEffect ? animation.effect.getKeyframes() : [],
-    );
-    expect(JSON.stringify(frames)).toMatch(transform);
-  },
-);
+] satisfies {
+  to: "/experience" | "/projects" | "/blog" | "/awards";
+  selector: string;
+  transform: RegExp;
+}[])("animates $to with its own entrance", async ({ to, selector, transform }) => {
+  await act(async () => {
+    await router.navigate({ to });
+  });
+  await act(async () => new Promise((resolve) => setTimeout(resolve, 60)));
+  const animations = container.querySelector(selector)?.getAnimations() ?? [];
+  const frames = animations.flatMap((animation) =>
+    animation.effect instanceof KeyframeEffect ? animation.effect.getKeyframes() : [],
+  );
+  expect(JSON.stringify(frames)).toMatch(transform);
+});
 
 it("disables page entrances under system reduced motion", async () => {
   await act(async () => {
@@ -296,6 +298,7 @@ it.each([
     awards: "Prestasi",
     scope: "Internasional",
     source: "Lihat kode sumber",
+    blogHeading: "Dalam tulisan ini",
   },
   {
     locale: "JA",
@@ -310,6 +313,7 @@ it.each([
     awards: "受賞歴",
     scope: "国際",
     source: "ソースコードを見る",
+    blogHeading: "この記事の内容",
   },
 ])("localizes every page in $locale and updates the page metadata", async (copy) => {
   await click(copy.locale);
@@ -335,8 +339,13 @@ it.each([
   });
   expect(document.title).toBe(`${copy.awards} — Gare’s Personal Space`);
   expect(container.querySelector(".award-row p")?.textContent).toContain(copy.scope);
+  await act(async () => {
+    await router.navigate({ to: "/blog/$slug", params: { slug: "neovim-api-in-cursor" } });
+  });
+  expect(document.title).toBe("Utilizing Neovim API in Cursor — Gare’s Personal Space");
+  expect(container.querySelector(".blog-article h2")?.textContent).toBe(copy.blogHeading);
   await click("EN");
   expect(document.documentElement.lang).toBe("en");
-  expect(document.title).toBe("Awards — Gare’s Personal Space");
+  expect(document.title).toBe("Utilizing Neovim API in Cursor — Gare’s Personal Space");
   expect(router.state.location.search.lang).toBeUndefined();
 });

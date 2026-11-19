@@ -1,10 +1,14 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { labels } from "../data/labels";
 import { useSite } from "../components/site-layout";
 import { findBlogPost } from "../data/blog";
 
 export const Route = createFileRoute("/blog/$slug")({
+  beforeLoad: ({ params }) => {
+    if (!findBlogPost(params.slug)) throw notFound();
+  },
   component: BlogPostPage,
+  notFoundComponent: BlogPostNotFound,
   head: ({ params, match }) => {
     const post = findBlogPost(params.slug);
     const t = labels[match.search.lang ?? "en"];
@@ -25,17 +29,7 @@ export function BlogPostPage() {
     timeZone: "UTC",
   });
 
-  if (!post) {
-    return (
-      <section className="content-section blog-post route-page">
-        <h1>{t.blog}</h1>
-        <p className="empty-state">{t.postNotFound}</p>
-        <Link className="experience-details" to="/blog">
-          {t.backToBlog}
-        </Link>
-      </section>
-    );
-  }
+  if (!post) throw notFound();
 
   return (
     <section className="content-section blog-post route-page">
@@ -62,6 +56,19 @@ export function BlogPostPage() {
           {t.originalPost} <span aria-hidden="true">↗</span>
         </a>
       </article>
+    </section>
+  );
+}
+
+function BlogPostNotFound() {
+  const { t } = useSite();
+  return (
+    <section className="content-section blog-post route-page">
+      <h1>{t.blog}</h1>
+      <p className="empty-state">{t.postNotFound}</p>
+      <Link className="experience-details" to="/blog">
+        {t.backToBlog}
+      </Link>
     </section>
   );
 }

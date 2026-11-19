@@ -60,7 +60,7 @@ export function Projects() {
             rel="noreferrer"
           >
             <div>
-              <span className="project-language">{project.language || t.repository}</span>
+              {project.language && <span className="project-language">{project.language}</span>}
               <h2>{project.name}</h2>
               <p>{project.description[locale]}</p>
               <div className="project-tags">

@@ -23,7 +23,15 @@ const config = defineConfig(({ mode }) => ({
       ? []
       : lazyPlugins(() => [
           devtools(),
-          nitro({ rollupConfig: { external: [/^@sentry\//] } }),
+          nitro({
+            rollupConfig: {
+              external: [/^@sentry\//],
+              onwarn(warning: { code?: string }, warn: (warning: unknown) => void) {
+                if (warning.code === "MODULE_LEVEL_DIRECTIVE") return;
+                warn(warning);
+              },
+            },
+          }),
           tailwindcss(),
           tanstackStart(),
           viteReact(),
