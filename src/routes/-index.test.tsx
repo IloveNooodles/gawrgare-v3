@@ -70,7 +70,7 @@ it("renders projects and awards at their own URLs", async () => {
   expect(awards).not.toContain('id="experience"');
 });
 
-it("renders the blog index with all three posts", async () => {
+it("renders the blog index with all six posts", async () => {
   const html = renderToStaticMarkup(<RouterProvider router={await loadRouter("/blog")} />);
   for (const content of [
     "NOTES FROM THE FIELD",
@@ -81,6 +81,56 @@ it("renders the blog index with all three posts", async () => {
     expect(html).toContain(content);
   }
   expect(html).toContain('href="/blog/kubernetes-ebpf-and-cilium"');
+  expect(html).toContain('href="/blog/introduction-to-binary-exploitation"');
+  const slugs = [...html.matchAll(/href="\/blog\/([\w-]+)"/g)].map((match) => match[1]);
+  expect(slugs).toEqual([
+    "kubernetes-ebpf-and-cilium",
+    "build-your-own-kubernetes-cluster",
+    "neovim-api-in-cursor",
+    "introduction-to-binary-exploitation",
+    "optimize-docker-using-multistage-docker-build",
+    "hello-world",
+  ]);
+});
+
+it("renders a ported v1 post as full Markdown", async () => {
+  const html = renderToStaticMarkup(
+    <RouterProvider router={await loadRouter("/blog/introduction-to-binary-exploitation")} />,
+  );
+  for (const content of [
+    "Classic Buffer Overflow",
+    '<div class="code-title">example1.c</div>',
+    '<pre class="code-block language-c"><code class="code-highlight language-c">',
+    '<span class="token keyword">',
+  ]) {
+    expect(html).toContain(content);
+  }
+  expect(html).not.toContain("Read the original on Money Forward Developers Blog");
+  expect(html).toContain('<nav class="post-toc"');
+  expect(html).toContain('href="#classic-buffer-overflow"');
+  expect(html).toContain("min read");
+});
+
+it("renders LaTeX, heading anchors and a table of contents", async () => {
+  const html = renderToStaticMarkup(
+    <RouterProvider router={await loadRouter("/blog/hello-world")} />,
+  );
+  for (const content of [
+    'class="katex"',
+    'id="table-of-contents"',
+    'class="post-toc"',
+    'id="here-are-some-cool-math-equation"',
+  ]) {
+    expect(html).toContain(content);
+  }
+});
+
+it("falls back to English markdown when a locale has no translation", async () => {
+  const html = renderToStaticMarkup(
+    <RouterProvider router={await loadRouter("/blog/hello-world", "id")} />,
+  );
+  expect(html).toContain('class="katex"');
+  expect(html).toContain("menit baca");
 });
 
 it("renders a blog post with its original source link", async () => {

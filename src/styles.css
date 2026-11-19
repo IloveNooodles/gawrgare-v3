@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 @font-face {
   font-family: Inter;
   src: url("/fonts/inter.woff2") format("woff2");
@@ -573,6 +574,177 @@ input:focus-visible {
 .blog-article .action-link {
   margin-top: 1rem;
 }
+.prose {
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: Paytone, sans-serif;
+  line-height: 1.25;
+  margin: 2.5rem 0 1rem;
+}
+.prose h1 {
+  font-size: 2rem;
+}
+.prose h2 {
+  font-size: 1.5rem;
+}
+.prose h3 {
+  font-size: 1.2rem;
+}
+.prose h4 {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose pre,
+.prose table {
+  margin: 0 0 1.25rem;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+}
+.prose li + li {
+  margin-top: 0.35rem;
+}
+.prose a {
+  color: var(--red);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.post-toc {
+  border: 1px solid var(--line);
+  margin: 0 0 1.5rem;
+  padding: 0.75rem 1rem;
+}
+.post-toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.post-toc li + li {
+  margin-top: 0.25rem;
+}
+.post-toc .toc-depth-3 {
+  padding-left: 1.25rem;
+}
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.prose strong {
+  color: var(--paper);
+}
+.prose blockquote {
+  border-left: 3px solid var(--red);
+  padding-left: 1rem;
+  color: var(--muted);
+}
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+.prose :not(pre) > code {
+  background: var(--line);
+  color: var(--paper);
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+}
+.prose pre {
+  background: var(--ink);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  padding: 1rem;
+}
+.prose pre code {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.code-title {
+  background: var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 1.25rem;
+  padding: 0.4rem 0.75rem;
+}
+.prose .token.comment,
+.prose .token.prolog,
+.prose .token.doctype,
+.prose .token.punctuation,
+.prose .token.operator {
+  color: var(--muted);
+}
+.prose .token.keyword,
+.prose .token.atrule,
+.prose .token.selector {
+  color: var(--red);
+}
+.prose .token.string,
+.prose .token.attr-value,
+.prose .token.char {
+  color: #a6e22e;
+}
+.prose .token.number,
+.prose .token.boolean,
+.prose .token.constant {
+  color: #ae81ff;
+}
+.prose .token.function,
+.prose .token.class-name,
+.prose .token.builtin {
+  color: #e6db74;
+}
+.prose .token.property,
+.prose .token.tag,
+.prose .token.symbol {
+  color: #f92672;
+}
+.prose .token.variable,
+.prose .token.regex {
+  color: #fd971f;
+}
+.prose img {
+  height: auto;
+  max-width: 100%;
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+.prose table {
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
+.prose th,
+.prose td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose .footnotes {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+}
+.prose .footnotes ol {
+  margin-bottom: 0;
+}
 footer {
   border-top: 1px solid var(--line);
   padding: 3rem 5%;
@@ -998,16 +1170,16 @@ footer > a:not(.wordmark) {
     animation: phantom-wipe 0.35s cubic-bezier(0.76, 0, 0.24, 1) both;
   }
   .hero-dots {
-    animation: halftone-drift 1s steps(5) 5;
+    animation: halftone-drift 1s steps(5) infinite;
   }
   .art-star {
-    animation: star-jolt 3.6s steps(2, end) 1;
+    animation: star-jolt 3.6s steps(2, end) infinite;
   }
   .star-back {
     animation-direction: reverse;
   }
   .calling-card {
-    animation: card-float 4s ease-in-out 1;
+    animation: card-float 4s ease-in-out infinite;
   }
 }
 @keyframes phantom-wipe {

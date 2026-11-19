@@ -1,4 +1,5 @@
 import type { Localized } from "./labels";
+import { LOCAL_POSTS } from "./local-posts";
 
 export type BlogPost = {
   slug: string;
@@ -8,6 +9,8 @@ export type BlogPost = {
   url: string;
   summary: Localized<string>;
   takeaways: Localized<string[]>;
+  readingTime?: Localized<number>;
+  body?: Localized<string>;
 };
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -107,7 +110,8 @@ export const BLOG_POSTS: BlogPost[] = [
       ],
     },
   },
-];
+  ...LOCAL_POSTS,
+].sort((a, b) => b.date.localeCompare(a.date));
 
 export function findBlogPost(slug: string) {
   return BLOG_POSTS.find((post) => post.slug === slug);
