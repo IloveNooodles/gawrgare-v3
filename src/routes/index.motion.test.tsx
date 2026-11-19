@@ -41,6 +41,16 @@ async function click(label: string) {
   await act(async () => button(label).click());
 }
 
+it("falls back to English for an unsupported language URL", async () => {
+  await act(async () => {
+    router.history.push("/?lang=invalid");
+    await router.load();
+  });
+  expect(document.documentElement.lang).toBe("en");
+  expect(document.title).toBe("Gare’s Personal Space");
+  expect(container.querySelector(".hero-copy > .eyebrow")?.textContent).toContain("Tinkerer");
+});
+
 function button(label: string) {
   const element = Array.from(container.querySelectorAll("button")).find(
     (candidate) => candidate.textContent === label,
@@ -126,7 +136,7 @@ it("keeps the language while navigating between pages", async () => {
     await router.navigate({ to: "/projects" });
   });
   expect(container.querySelector(".site-shell")?.getAttribute("lang")).toBe("ja");
-  expect(container.querySelector('nav a[href="/projects"]')?.getAttribute("aria-current")).toBe(
+  expect(container.querySelector('nav a[href^="/projects"]')?.getAttribute("aria-current")).toBe(
     "page",
   );
   expect(container.querySelector("h1")?.textContent).toBe("プロジェクト.");
@@ -270,4 +280,63 @@ it("starts the hero text and artwork without an initial wait", async () => {
     expect(animations.length).toBeGreaterThan(0);
     expect(animations.every((animation) => animation.effect?.getTiming().delay === 0)).toBe(true);
   }
+});
+
+it.each([
+  {
+    locale: "ID",
+    lang: "id",
+    headline: "SATU DEMI",
+    identity: "Penggemar sistem tingkat rendah",
+    bio: "sudut pribadi saya",
+    experience: "Pengalaman",
+    saving: "Menghemat $1.591+ per bulan",
+    project: "Arsip perjalanan CTF",
+    placeholder: "infrastruktur",
+    awards: "Prestasi",
+    scope: "Internasional",
+    source: "Lihat kode sumber",
+  },
+  {
+    locale: "JA",
+    lang: "ja",
+    headline: "ひとつ",
+    identity: "低レイヤー技術が好き",
+    bio: "インターネット上の私の居場所",
+    experience: "経験",
+    saving: "月額1,591米ドル以上",
+    project: "CTFへの挑戦の記録",
+    placeholder: "インフラ",
+    awards: "受賞歴",
+    scope: "国際",
+    source: "ソースコードを見る",
+  },
+])("localizes every page in $locale and updates the page metadata", async (copy) => {
+  await click(copy.locale);
+  expect(document.documentElement.lang).toBe(copy.lang);
+  expect(document.title).toBe("Gare’s Personal Space");
+  expect(container.querySelector("h1")?.textContent).toContain(copy.headline);
+  expect(container.querySelector(".hero-copy > .eyebrow")?.textContent).toContain(copy.identity);
+  expect(container.querySelector(".home-about")?.textContent).toContain(copy.bio);
+  expect(container.querySelector("footer")?.textContent).toContain(copy.source);
+  await act(async () => {
+    await router.navigate({ to: "/experience" });
+  });
+  expect(document.title).toBe(`${copy.experience} — Gare’s Personal Space`);
+  expect(container.querySelector(".experience-points")?.textContent).toContain(copy.saving);
+  expect(container.querySelector(".experience-row h2")?.textContent).toBe("Money Forward, Inc.");
+  await act(async () => {
+    await router.navigate({ to: "/projects" });
+  });
+  expect(container.querySelector(".project-row p")?.textContent).toContain(copy.project);
+  expect(container.querySelector("input")?.placeholder).toContain(copy.placeholder);
+  await act(async () => {
+    await router.navigate({ to: "/awards" });
+  });
+  expect(document.title).toBe(`${copy.awards} — Gare’s Personal Space`);
+  expect(container.querySelector(".award-row p")?.textContent).toContain(copy.scope);
+  await click("EN");
+  expect(document.documentElement.lang).toBe("en");
+  expect(document.title).toBe("Awards — Gare’s Personal Space");
+  expect(router.state.location.search.lang).toBeUndefined();
 });

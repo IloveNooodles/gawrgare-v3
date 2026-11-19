@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "@tanstack/react-router";
+import { Link, Outlet, useLocation, useNavigate, useSearch } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { labels, type Locale } from "../data/labels";
 
@@ -26,7 +26,17 @@ const pages: {
 const languages: Locale[] = ["en", "id", "ja"];
 
 export function SiteLayout() {
-  const [locale, setLocale] = useState<Locale>("en");
+  const { lang } = useSearch({ from: "__root__" });
+  const locale = lang ?? "en";
+  const navigate = useNavigate();
+  const setLocale = (next: Locale) => {
+    void navigate({
+      to: ".",
+      search: (previous) => ({ ...previous, lang: next === "en" ? undefined : next }),
+      replace: true,
+      resetScroll: false,
+    });
+  };
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useLocation({ select: (location) => location.pathname });
   const previousPath = useRef(pathname);
@@ -39,13 +49,6 @@ export function SiteLayout() {
       previousPath.current = pathname;
     }
   }, [pathname]);
-
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    const page = pages.find((entry) => entry.to === pathname);
-    document.title = pathname === "/" || !page ? t.siteName : `${t[page.label]} — ${t.siteName}`;
-    document.querySelector('meta[name="description"]')?.setAttribute("content", t.siteDescription);
-  }, [locale, pathname, t]);
 
   return (
     <SiteContext.Provider value={{ t, locale, setLocale }}>

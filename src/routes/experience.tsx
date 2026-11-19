@@ -8,7 +8,13 @@ import { experiences } from "../data/experience";
 
 export const Route = createFileRoute("/experience")({
   component: Experience,
-  head: () => ({ meta: [{ title: `Experience — ${labels.en.siteName}` }] }),
+  head: ({ match }) => ({
+    meta: [
+      {
+        title: `${labels[match.search.lang ?? "en"].experiences} — ${labels[match.search.lang ?? "en"].siteName}`,
+      },
+    ],
+  }),
 });
 
 const stops = [

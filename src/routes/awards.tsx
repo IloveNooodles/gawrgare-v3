@@ -6,7 +6,13 @@ import { awards } from "../data/awards";
 
 export const Route = createFileRoute("/awards")({
   component: Awards,
-  head: () => ({ meta: [{ title: `Awards — ${labels.en.siteName}` }] }),
+  head: ({ match }) => ({
+    meta: [
+      {
+        title: `${labels[match.search.lang ?? "en"].awards} — ${labels[match.search.lang ?? "en"].siteName}`,
+      },
+    ],
+  }),
 });
 
 export function Awards() {

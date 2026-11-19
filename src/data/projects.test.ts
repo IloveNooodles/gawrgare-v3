@@ -14,3 +14,9 @@ describe("project search", () => {
     expect(searchProjects("no-such-project-12345")).toEqual([]);
   });
 });
+
+it("searches translated descriptions in Indonesian and Japanese", () => {
+  for (const query of ["protokol", "プロトコル"]) {
+    expect(searchProjects(query).some((project) => project.name === "raft-python")).toBe(true);
+  }
+});

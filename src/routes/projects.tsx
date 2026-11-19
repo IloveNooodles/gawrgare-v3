@@ -7,7 +7,13 @@ import { GITHUB_PROJECTS, searchProjects } from "../data/projects";
 
 export const Route = createFileRoute("/projects")({
   component: Projects,
-  head: () => ({ meta: [{ title: `Projects — ${labels.en.siteName}` }] }),
+  head: ({ match }) => ({
+    meta: [
+      {
+        title: `${labels[match.search.lang ?? "en"].projects} — ${labels[match.search.lang ?? "en"].siteName}`,
+      },
+    ],
+  }),
 });
 
 export function Projects() {
