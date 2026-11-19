@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { useLayoutEffect, useRef, useState } from "react";
 
 type Station = { x: number; y: number; bottom: number };
@@ -17,6 +18,68 @@ export function buildTrack(stations: readonly Station[]): Point[][] {
     ];
   });
 }
+
+const stops = [
+  { station: 12, left: 20, width: 74, angle: -2.4, gap: 4, color: "#f4bc35" },
+  { station: 82, left: 10, width: 64, angle: 2.1, gap: 3, color: "#a9ce3a" },
+  { station: 22, left: 30, width: 65, angle: -1.8, gap: 4.5, color: "#56c7c7" },
+  { station: 76, left: 4, width: 64, angle: 2.5, gap: 3.5, color: "#db6aab" },
+  { station: 14, left: 22, width: 68, angle: -2, gap: 4, color: "#d5d9dc" },
+  { station: 80, left: 8, width: 64, angle: 1.3, gap: 0, color: "#f4bc35" },
+];
+
+type StopStyle = CSSProperties &
+  Record<
+    | "--track-color"
+    | "--station"
+    | "--card-left"
+    | "--card-width"
+    | "--card-angle"
+    | "--stop-gap"
+    | "--connector-left"
+    | "--connector-width",
+    string
+  >;
+
+const pointsToString = (points: readonly Point[]) =>
+  points.map((point) => `${point.x},${point.y}`).join(" ");
+
+export function buildTrackView(legs: readonly Point[][]) {
+  return {
+    edge: pointsToString(legs.flatMap((leg, index) => (index === 0 ? leg : leg.slice(1)))),
+    legs: legs.map((leg, index) => ({
+      points: pointsToString(leg),
+      color: stops[index % stops.length].color,
+    })),
+  };
+}
+
+export function buildStopStyles(
+  values: readonly {
+    station: number;
+    left: number;
+    width: number;
+    angle: number;
+    gap: number;
+    color: string;
+  }[],
+): StopStyle[] {
+  return values.map((stop) => {
+    const edge = stop.station < stop.left ? stop.left : stop.left + stop.width;
+    return {
+      "--track-color": stop.color,
+      "--station": `${stop.station}%`,
+      "--card-left": `${stop.left}%`,
+      "--card-width": `${stop.width}%`,
+      "--card-angle": `${stop.angle}deg`,
+      "--stop-gap": `${stop.gap}rem`,
+      "--connector-left": `${Math.min(stop.station, edge)}%`,
+      "--connector-width": `${Math.abs(stop.station - edge)}%`,
+    };
+  });
+}
+
+const stopStyles = buildStopStyles(stops);
 
 export function useTimelineTrack() {
   const timeline = useRef<HTMLOListElement>(null);
@@ -55,5 +118,11 @@ export function useTimelineTrack() {
     return () => observer.disconnect();
   }, []);
 
-  return { timeline, track };
+  return {
+    timeline,
+    viewBox: `0 0 ${track.width} ${track.height}`,
+    hasTrack: track.legs.length > 0,
+    ...buildTrackView(track.legs),
+    stopStyles,
+  };
 }

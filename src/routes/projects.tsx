@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { usePageEntrance } from "../hooks/use-page-entrance";
 import { useSite } from "../components/site-layout";
-import { GITHUB_PROJECTS, searchProjects } from "../data/projects";
+import { visibleProjects } from "../data/projects";
 
 export const Route = createFileRoute("/projects")({
   component: Projects,
@@ -16,11 +16,7 @@ export function Projects() {
   const { t, locale } = useSite();
   const entrance = usePageEntrance("projects");
   const [query, setQuery] = useState("");
-  const projects = query.trim()
-    ? searchProjects(query)
-    : GITHUB_PROJECTS.filter(
-        (project) => !project.private && ["CTFs", "dotfiles", "raft-python"].includes(project.name),
-      );
+  const { projects, total } = visibleProjects(query);
   return (
     <section ref={entrance} id="projects" className="content-section projects-section route-page">
       <div className="section-heading heading-row">
@@ -43,8 +39,7 @@ export function Projects() {
         />
       </label>
       <p className="result-count" role="status">
-        {projects.length} / {GITHUB_PROJECTS.filter((project) => !project.private).length}{" "}
-        {query.trim() ? t.matching : t.featured}
+        {projects.length} / {total} {query.trim() ? t.matching : t.featured}
       </p>
       <div className="project-list">
         {projects.map((project) => (
