@@ -1,4 +1,4 @@
-import type { Localized } from "./labels";
+import type { Locale, Localized } from "./labels";
 import { LOCAL_POSTS } from "./local-posts";
 
 export type BlogPost = {
@@ -13,7 +13,7 @@ export type BlogPost = {
   body?: Localized<string>;
 };
 
-export const BLOG_POSTS: BlogPost[] = [
+const BLOG_POSTS: BlogPost[] = [
   {
     slug: "kubernetes-ebpf-and-cilium",
     title: "Supercharge Kubernetes with eBPF and Cilium",
@@ -113,6 +113,61 @@ export const BLOG_POSTS: BlogPost[] = [
   ...LOCAL_POSTS,
 ].sort((a, b) => b.date.localeCompare(a.date));
 
-export function findBlogPost(slug: string) {
-  return BLOG_POSTS.find((post) => post.slug === slug);
+export type ListedBlogPost = {
+  slug: string;
+  title: string;
+  dateTime: string;
+  date: string;
+  summary: string;
+  tags: string[];
+};
+
+export type ResolvedBlogPost = {
+  slug: string;
+  title: string;
+  dateTime: string;
+  date: string;
+  tags: string[];
+  summary: string;
+  takeaways: string[];
+  readingTime?: number;
+  body?: string;
+  url: string;
+  hasBody: boolean;
+};
+
+function formatDate(value: string, locale: Locale, options: Intl.DateTimeFormatOptions) {
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: "UTC" }).format(
+    new Date(`${value}T00:00:00Z`),
+  );
+}
+
+export function listBlogPosts(locale: Locale): ListedBlogPost[] {
+  return BLOG_POSTS.map((post) => ({
+    slug: post.slug,
+    title: post.title,
+    dateTime: post.date,
+    date: formatDate(post.date, locale, { month: "short", day: "numeric", year: "numeric" }),
+    summary: post.summary[locale],
+    tags: post.tags,
+  }));
+}
+
+export function getBlogPost(slug: string, locale: Locale): ResolvedBlogPost | undefined {
+  const post = BLOG_POSTS.find((candidate) => candidate.slug === slug);
+  if (!post) return undefined;
+  const body = post.body?.[locale];
+  return {
+    slug: post.slug,
+    title: post.title,
+    dateTime: post.date,
+    date: formatDate(post.date, locale, { month: "long", day: "numeric", year: "numeric" }),
+    tags: post.tags,
+    summary: post.summary[locale],
+    takeaways: post.takeaways[locale],
+    readingTime: post.readingTime?.[locale],
+    body,
+    url: post.url,
+    hasBody: Boolean(body),
+  };
 }

@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { usePageEntrance } from "../hooks/use-page-entrance";
 import { useSite } from "../components/site-layout";
-import { BLOG_POSTS } from "../data/blog";
+import { listBlogPosts } from "../data/blog";
 
 export const Route = createFileRoute("/blog/")({
   component: Blog,
@@ -10,12 +10,7 @@ export const Route = createFileRoute("/blog/")({
 export function Blog() {
   const { t, locale } = useSite();
   const entrance = usePageEntrance("blog");
-  const date = new Intl.DateTimeFormat(locale, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
+  const posts = listBlogPosts(locale);
   return (
     <section ref={entrance} id="blog" className="content-section blog-section route-page">
       <div className="section-heading heading-row">
@@ -30,15 +25,15 @@ export function Blog() {
       </div>
       <p className="blog-intro">{t.blogIntro}</p>
       <ol className="blog-list">
-        {BLOG_POSTS.map((post) => (
+        {posts.map((post) => (
           <li key={post.slug}>
             <Link className="blog-row" to="/blog/$slug" params={{ slug: post.slug }}>
-              <time className="blog-date" dateTime={post.date}>
-                {date.format(new Date(`${post.date}T00:00:00Z`))}
+              <time className="blog-date" dateTime={post.dateTime}>
+                {post.date}
               </time>
               <div>
                 <h2>{post.title}</h2>
-                <p>{post.summary[locale]}</p>
+                <p>{post.summary}</p>
                 <div className="project-tags">
                   {post.tags.map((tag) => (
                     <span key={tag}>{tag}</span>

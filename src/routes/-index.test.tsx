@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { RouterProvider } from "@tanstack/react-router";
 import { expect, it } from "vite-plus/test";
 import { loadRouter } from "../test/router";
+import { getBlogPost, listBlogPosts } from "../data/blog";
 
 it("renders a short home page visibly on the server", async () => {
   const html = renderToStaticMarkup(<RouterProvider router={await loadRouter()} />);
@@ -82,8 +83,7 @@ it("renders the blog index with all six posts", async () => {
   }
   expect(html).toContain('href="/blog/kubernetes-ebpf-and-cilium"');
   expect(html).toContain('href="/blog/introduction-to-binary-exploitation"');
-  const slugs = [...html.matchAll(/href="\/blog\/([\w-]+)"/g)].map((match) => match[1]);
-  expect(slugs).toEqual([
+  expect(listBlogPosts("en").map((post) => post.slug)).toEqual([
     "kubernetes-ebpf-and-cilium",
     "build-your-own-kubernetes-cluster",
     "neovim-api-in-cursor",
@@ -91,6 +91,24 @@ it("renders the blog index with all six posts", async () => {
     "optimize-docker-using-multistage-docker-build",
     "hello-world",
   ]);
+});
+
+it("resolves post data through the blog interface", () => {
+  const newest = listBlogPosts("en")[0];
+  expect(newest?.dateTime).toBe("2025-12-19");
+  expect(newest?.date).toContain("2025");
+  expect(newest?.summary).toContain("Kubernetes");
+
+  const ported = getBlogPost("hello-world", "en");
+  expect(ported?.hasBody).toBe(true);
+  expect(ported?.body).toContain('class="katex"');
+  expect(ported?.readingTime).toBeGreaterThan(0);
+  expect(ported?.dateTime).toBe("2023-06-04");
+
+  const summary = getBlogPost("neovim-api-in-cursor", "ja");
+  expect(summary?.hasBody).toBe(false);
+  expect(summary?.summary).toContain("Vim");
+  expect(getBlogPost("nope", "en")).toBeUndefined();
 });
 
 it("renders a ported v1 post as full Markdown", async () => {

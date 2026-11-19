@@ -3,7 +3,8 @@ import markedFootnote from "marked-footnote";
 import markedKatex from "marked-katex-extension";
 import Prism from "prismjs";
 import type { BlogPost } from "./blog";
-import { labels, type Locale, type Localized } from "./labels";
+import type { Locale, Localized } from "./labels";
+import { locales } from "./locale";
 
 import bashGrammar from "prismjs/components/prism-bash.js?raw";
 import cGrammar from "prismjs/components/prism-c.js?raw";
@@ -107,7 +108,6 @@ function takeawaysFrom(body: string) {
     .filter((heading) => heading !== "Table of Contents");
 }
 
-const locales = Object.keys(labels) as Locale[];
 const files = import.meta.glob<string>("./posts/*.md", {
   query: "?raw",
   import: "default",

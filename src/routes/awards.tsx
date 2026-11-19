@@ -1,4 +1,4 @@
-import { labels } from "../data/labels";
+import { pageTitle } from "../data/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { usePageEntrance } from "../hooks/use-page-entrance";
 import { useSite } from "../components/site-layout";
@@ -7,11 +7,7 @@ import { awards } from "../data/awards";
 export const Route = createFileRoute("/awards")({
   component: Awards,
   head: ({ match }) => ({
-    meta: [
-      {
-        title: `${labels[match.search.lang ?? "en"].awards} — ${labels[match.search.lang ?? "en"].siteName}`,
-      },
-    ],
+    meta: [{ title: pageTitle(match.search, "awards") }],
   }),
 });
 

@@ -1,4 +1,4 @@
-import { labels } from "../data/labels";
+import { pageTitle } from "../data/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { usePageEntrance } from "../hooks/use-page-entrance";
@@ -8,11 +8,7 @@ import { GITHUB_PROJECTS, searchProjects } from "../data/projects";
 export const Route = createFileRoute("/projects")({
   component: Projects,
   head: ({ match }) => ({
-    meta: [
-      {
-        title: `${labels[match.search.lang ?? "en"].projects} — ${labels[match.search.lang ?? "en"].siteName}`,
-      },
-    ],
+    meta: [{ title: pageTitle(match.search, "projects") }],
   }),
 });
 

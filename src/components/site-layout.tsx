@@ -1,10 +1,11 @@
 import { Link, Outlet, useLocation, useNavigate, useSearch } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { labels, type Locale } from "../data/labels";
+import type { Locale } from "../data/labels";
+import { labelsFor, locales, resolveLocale, searchFor } from "../data/locale";
 import { ArchiveGate } from "./archive-gate";
 
 const SiteContext = createContext<{
-  t: typeof labels.en;
+  t: ReturnType<typeof labelsFor>;
   locale: Locale;
   setLocale: (locale: Locale) => void;
 } | null>(null);
@@ -25,16 +26,14 @@ const pages: {
   { to: "/blog", label: "blog" },
   { to: "/awards", label: "awards" },
 ];
-const languages: Locale[] = ["en", "id", "ja"];
-
 export function SiteLayout() {
   const { lang } = useSearch({ from: "__root__" });
-  const locale = lang ?? "en";
+  const locale = resolveLocale({ lang });
   const navigate = useNavigate();
   const setLocale = (next: Locale) => {
     void navigate({
       to: ".",
-      search: (previous) => ({ ...previous, lang: next === "en" ? undefined : next }),
+      search: (previous) => ({ ...previous, ...searchFor(next) }),
       replace: true,
       resetScroll: false,
     });
@@ -43,7 +42,7 @@ export function SiteLayout() {
   const pathname = useLocation({ select: (location) => location.pathname });
   const previousPath = useRef(pathname);
   const main = useRef<HTMLElement>(null);
-  const t = labels[locale];
+  const t = labelsFor(locale);
 
   useEffect(() => {
     if (previousPath.current !== pathname) {
@@ -129,7 +128,7 @@ export function SiteLayout() {
           <header className="topbar">
             <span className="topbar-note">{t.personalSpace}</span>
             <div className="languages" aria-label={t.language}>
-              {languages.map((language) => (
+              {locales.map((language) => (
                 <button
                   key={language}
                   aria-pressed={locale === language}

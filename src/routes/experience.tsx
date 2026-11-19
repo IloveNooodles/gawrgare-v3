@@ -1,4 +1,4 @@
-import { labels } from "../data/labels";
+import { pageTitle } from "../data/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { useTimelineTrack } from "../hooks/use-timeline-track";
@@ -9,11 +9,7 @@ import { experiences } from "../data/experience";
 export const Route = createFileRoute("/experience")({
   component: Experience,
   head: ({ match }) => ({
-    meta: [
-      {
-        title: `${labels[match.search.lang ?? "en"].experiences} — ${labels[match.search.lang ?? "en"].siteName}`,
-      },
-    ],
+    meta: [{ title: pageTitle(match.search, "experiences") }],
   }),
 });
 
