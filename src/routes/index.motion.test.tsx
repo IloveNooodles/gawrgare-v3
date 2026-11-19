@@ -33,6 +33,7 @@ afterEach(async () => {
   await act(async () => root.unmount());
   container.remove();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
   systemMotion("no-preference");
 });
 
@@ -59,14 +60,27 @@ it("starts the intro animation after mounting", async () => {
   expect(JSON.stringify(frames)).toContain("translateX");
 });
 
-it("can replay the intro without a pause button", async () => {
-  const firstWipe = container.querySelector(".hero-swipe");
-  expect(firstWipe).not.toBeNull();
-  await click("Replay intro");
-  expect(container.querySelector(".hero-swipe")).not.toBe(firstWipe);
+it("plays the hero again when returning home without replay controls", async () => {
+  const firstHero = container.querySelector(".hero");
+  await act(async () => {
+    await router.navigate({ to: "/projects" });
+  });
+  expect(container.querySelector(".hero")).toBeNull();
+  await act(async () => {
+    await router.navigate({ to: "/" });
+  });
+  await act(async () => new Promise((resolve) => setTimeout(resolve, 60)));
+  expect(container.querySelector(".hero")).not.toBe(firstHero);
+  const frames = container
+    .querySelector(".hero h1 > span")
+    ?.getAnimations()
+    .flatMap((animation) =>
+      animation.effect instanceof KeyframeEffect ? animation.effect.getKeyframes() : [],
+    );
+  expect(JSON.stringify(frames)).toContain("translateX");
   expect(
     Array.from(container.querySelectorAll("button")).some((element) =>
-      /pause|resume/i.test(element.textContent ?? ""),
+      /replay intro|pause motion|resume motion/i.test(element.textContent ?? ""),
     ),
   ).toBe(false);
 });
@@ -201,4 +215,59 @@ it("starts the career timeline with Now and follows with earlier roles", async (
   expect(roles.at(-1)?.querySelector("time")?.dateTime).toBe("2021-10");
   expect(roles[0]?.textContent).toContain("Now");
   expect(roles.slice(1).some((role) => role.textContent?.includes("Now"))).toBe(false);
+});
+
+it("draws one shared track through the stations and updates it after resizing", async () => {
+  let width = 800;
+  const resize = vi.fn();
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      constructor(callback: () => void) {
+        resize.mockImplementation(callback);
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
+  vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    if (this.classList.contains("experience-timeline")) return new DOMRect(100, 200, width, 1800);
+    const item = this.closest(".timeline-item");
+    const index = Array.from(container.querySelectorAll(".timeline-item")).indexOf(item ?? this);
+    if (this.classList.contains("timeline-item"))
+      return new DOMRect(100, 200 + index * 300, width, 240);
+    if (this.classList.contains("timeline-node")) {
+      const x = [0.15, 0.75, 0.25, 0.8, 0.2, 0.7][index] * width;
+      return new DOMRect(100 + x - 10, 200 + index * 300 + 22, 20, 20);
+    }
+    return new DOMRect();
+  });
+  await act(async () => {
+    await router.navigate({ to: "/experience" });
+  });
+  expect(container.querySelectorAll(".timeline-route")).toHaveLength(1);
+  expect(container.querySelector(".timeline-route")?.getAttribute("viewBox")).toBe("0 0 800 1800");
+  const points = container.querySelector(".timeline-track-edge")?.getAttribute("points");
+  expect(points).toMatch(/^120,32 /);
+  expect(points).toMatch(/560,1532$/);
+  await act(async () => {
+    width = 1000;
+    resize();
+  });
+  expect(container.querySelector(".timeline-route")?.getAttribute("viewBox")).toBe("0 0 1000 1800");
+  expect(container.querySelector(".timeline-track-edge")?.getAttribute("points")).toMatch(
+    /^150,32 /,
+  );
+});
+
+it("starts the hero text and artwork without an initial wait", async () => {
+  await act(async () => new Promise((resolve) => setTimeout(resolve, 60)));
+  for (const selector of [".hero-copy > .eyebrow", ".hero-art"]) {
+    const animations = container.querySelector(selector)?.getAnimations() ?? [];
+    expect(animations.length).toBeGreaterThan(0);
+    expect(animations.every((animation) => animation.effect?.getTiming().delay === 0)).toBe(true);
+  }
 });

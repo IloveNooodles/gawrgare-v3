@@ -1,3 +1,4 @@
+import { labels } from "../data/labels";
 import { createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { useTimelineTrack } from "../hooks/use-timeline-track";
@@ -7,7 +8,7 @@ import { experiences } from "../data/experience";
 
 export const Route = createFileRoute("/experience")({
   component: Experience,
-  head: () => ({ meta: [{ title: "Experience — Gare" }] }),
+  head: () => ({ meta: [{ title: `Experience — ${labels.en.siteName}` }] }),
 });
 
 const stops = [
@@ -48,7 +49,7 @@ export function Experience() {
   return (
     <section ref={entrance} id="experience" className="content-section route-page experience-map">
       <div className="section-heading">
-        <p className="eyebrow">THE JOURNEY SO FAR</p>
+        <p className="eyebrow">{t.experienceEyebrow}</p>
         <h1>
           {t.experiences}
           <span>.</span>
@@ -59,10 +60,10 @@ export function Experience() {
           target="_blank"
           rel="noreferrer"
         >
-          Full work history on LinkedIn
+          {t.fullHistory}
         </a>
       </div>
-      <ol ref={timeline} className="experience-timeline" aria-label={t.experiences}>
+      <div className="timeline-map">
         {track.legs.length > 0 && (
           <svg
             className="timeline-route"
@@ -87,65 +88,73 @@ export function Experience() {
             ))}
           </svg>
         )}
-        {experiences.map((experience, index) => {
-          const stop = stops[index % stops.length];
-          const edge = stop.station < stop.left ? stop.left : stop.left + stop.width;
+        <ol ref={timeline} className="experience-timeline" aria-label={t.experiences}>
+          {experiences.map((experience, index) => {
+            const stop = stops[index % stops.length];
+            const edge = stop.station < stop.left ? stop.left : stop.left + stop.width;
 
-          const style: StopStyle = {
-            "--track-color": stop.color,
-            "--station": `${stop.station}%`,
-            "--card-left": `${stop.left}%`,
-            "--card-width": `${stop.width}%`,
-            "--card-angle": `${stop.angle}deg`,
-            "--stop-gap": `${stop.gap}rem`,
-            "--connector-left": `${Math.min(stop.station, edge)}%`,
-            "--connector-width": `${Math.abs(stop.station - edge)}%`,
-          };
-          return (
-            <li
-              className="timeline-item"
-              key={experience.name}
-              data-current={experience.endDate === null ? true : undefined}
-              style={style}
-            >
-              <span className="timeline-node" aria-hidden="true" />
-              <article className="experience-row">
-                <p className="experience-date">
-                  <time dateTime={experience.startDate}>
-                    {month.format(new Date(`${experience.startDate}-01T00:00:00Z`))}
-                  </time>
-                  <span aria-hidden="true"> — </span>
-                  {experience.endDate ? (
-                    <time dateTime={experience.endDate}>
-                      {month.format(new Date(`${experience.endDate}-01T00:00:00Z`))}
+            const style: StopStyle = {
+              "--track-color": stop.color,
+              "--station": `${stop.station}%`,
+              "--card-left": `${stop.left}%`,
+              "--card-width": `${stop.width}%`,
+              "--card-angle": `${stop.angle}deg`,
+              "--stop-gap": `${stop.gap}rem`,
+              "--connector-left": `${Math.min(stop.station, edge)}%`,
+              "--connector-width": `${Math.abs(stop.station - edge)}%`,
+            };
+            return (
+              <li
+                className="timeline-item"
+                key={experience.name}
+                data-current={experience.endDate === null ? true : undefined}
+                style={style}
+              >
+                <span className="timeline-node" aria-hidden="true" />
+                <article className="experience-row">
+                  <p className="experience-date">
+                    <time dateTime={experience.startDate}>
+                      {month.format(new Date(`${experience.startDate}-01T00:00:00Z`))}
                     </time>
-                  ) : (
-                    <span className="timeline-now">{t.now}</span>
-                  )}
-                </p>
-                <div>
-                  <h2>
-                    <a href={experience.url} target="_blank" rel="noreferrer">
-                      {experience.name}
-                    </a>
-                  </h2>
-                  <p className="role-title">{experience.title}</p>
-                  <ul className="experience-points">
-                    {experience.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                  <div className="project-tags">
-                    {experience.tag.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
+                    <span aria-hidden="true"> — </span>
+                    {experience.endDate ? (
+                      <time dateTime={experience.endDate}>
+                        {month.format(new Date(`${experience.endDate}-01T00:00:00Z`))}
+                      </time>
+                    ) : (
+                      <span className="timeline-now">{t.now}</span>
+                    )}
+                  </p>
+                  <div>
+                    <h2>
+                      <a href={experience.url} target="_blank" rel="noreferrer">
+                        {experience.name}
+                      </a>
+                    </h2>
+                    <p className="role-title">{experience.title[locale]}</p>
+                    <ul className="experience-points">
+                      {experience.points[locale].map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                    <div className="project-tags">
+                      {experience.tag.map((tag) => (
+                        <span key={tag}>
+                          {tag === "Leadership"
+                            ? t.leadership
+                            : tag === "Payments"
+                              ? t.payments
+                              : tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </article>
-            </li>
-          );
-        })}
-      </ol>
+                </article>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </section>
   );
 }

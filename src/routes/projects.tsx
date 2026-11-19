@@ -1,3 +1,4 @@
+import { labels } from "../data/labels";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { usePageEntrance } from "../hooks/use-page-entrance";
@@ -6,11 +7,11 @@ import { GITHUB_PROJECTS, searchProjects } from "../data/projects";
 
 export const Route = createFileRoute("/projects")({
   component: Projects,
-  head: () => ({ meta: [{ title: "Projects — Gare" }] }),
+  head: () => ({ meta: [{ title: `Projects — ${labels.en.siteName}` }] }),
 });
 
 export function Projects() {
-  const { t } = useSite();
+  const { t, locale } = useSite();
   const entrance = usePageEntrance("projects");
   const [query, setQuery] = useState("");
   const projects = query.trim()
@@ -22,13 +23,13 @@ export function Projects() {
     <section ref={entrance} id="projects" className="content-section projects-section route-page">
       <div className="section-heading heading-row">
         <div>
-          <p className="eyebrow">IDEAS, TURNED INTO COMMITS</p>
+          <p className="eyebrow">{t.projectsEyebrow}</p>
           <h1>
             {t.projects}
             <span>.</span>
           </h1>
         </div>
-        <span className="section-stamp">BUILT TO EXPLORE</span>
+        <span className="section-stamp">{t.projectsStamp}</span>
       </div>
       <label className="search-field">
         <span>{t.search}</span>
@@ -36,12 +37,12 @@ export function Projects() {
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Python, infrastructure, CTF…"
+          placeholder={t.searchPlaceholder}
         />
       </label>
       <p className="result-count" role="status">
         {projects.length} / {GITHUB_PROJECTS.filter((project) => !project.private).length}{" "}
-        {query.trim() ? "matching repositories" : "featured · search all repositories"}
+        {query.trim() ? t.matching : t.featured}
       </p>
       <div className="project-list">
         {projects.map((project) => (
@@ -53,16 +54,22 @@ export function Projects() {
             rel="noreferrer"
           >
             <div>
-              <span className="project-language">{project.language || "Repository"}</span>
+              <span className="project-language">{project.language || t.repository}</span>
               <h2>{project.name}</h2>
-              <p>{project.description}</p>
+              <p>{project.description[locale]}</p>
               <div className="project-tags">
                 {project.topics.map((topic) => (
                   <span key={topic}>{topic}</span>
                 ))}
               </div>
             </div>
-            <span className="project-stars" aria-label={`${project.stargazers_count} GitHub stars`}>
+            <span
+              className="project-stars"
+              aria-label={t.stars.replace(
+                "{count}",
+                new Intl.NumberFormat(locale).format(project.stargazers_count),
+              )}
+            >
               ☆ {project.stargazers_count}
             </span>
           </a>

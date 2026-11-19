@@ -1,7 +1,7 @@
 export type Award = {
   name: string;
   year: number;
-  scope: string;
+  scope: "National" | "International";
   url: string;
   place: number;
   organizer: string;

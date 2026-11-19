@@ -1,3 +1,4 @@
+import { labels } from "../data/labels";
 import { createFileRoute } from "@tanstack/react-router";
 import { usePageEntrance } from "../hooks/use-page-entrance";
 import { useSite } from "../components/site-layout";
@@ -5,16 +6,16 @@ import { awards } from "../data/awards";
 
 export const Route = createFileRoute("/awards")({
   component: Awards,
-  head: () => ({ meta: [{ title: "Awards — Gare" }] }),
+  head: () => ({ meta: [{ title: `Awards — ${labels.en.siteName}` }] }),
 });
 
 export function Awards() {
-  const { t } = useSite();
+  const { t, locale } = useSite();
   const entrance = usePageEntrance("awards");
   return (
     <section ref={entrance} id="awards" className="content-section awards-section route-page">
       <div className="section-heading">
-        <p className="eyebrow">A FEW SIDE QUESTS COMPLETED</p>
+        <p className="eyebrow">{t.awardsEyebrow}</p>
         <h1>
           {t.awards}
           <span>.</span>
@@ -29,11 +30,19 @@ export function Awards() {
             target="_blank"
             rel="noreferrer"
           >
-            <span className="award-place">#{award.place}</span>
+            <span
+              className="award-place"
+              aria-label={t.place.replace(
+                "{count}",
+                new Intl.NumberFormat(locale).format(award.place),
+              )}
+            >
+              #{award.place}
+            </span>
             <div>
               <h2>{award.name}</h2>
               <p>
-                {award.organizer} · {award.scope}
+                {award.organizer} · {t.awardScope[award.scope]}
               </p>
             </div>
             <span className="award-year">{award.year}</span>

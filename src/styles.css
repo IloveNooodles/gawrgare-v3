@@ -677,13 +677,13 @@ footer > a:not(.wordmark) {
 
 @media (prefers-reduced-motion: no-preference) {
   .art-spark {
-    animation: spark-stamp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+    animation: spark-stamp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   .spark-two {
-    animation-delay: 0.85s;
+    animation-delay: 0.08s;
   }
   .title-star {
-    animation: star-turn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    animation: star-turn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   .calling-card {
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -736,40 +736,20 @@ footer > a:not(.wordmark) {
 .hero-swipe {
   display: none;
 }
-.motion-controls {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 1.5rem;
-}
-.motion-controls button {
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid currentColor;
-  padding: 0.6rem 0.8rem;
-  min-height: 44px;
-  font-size: 0.875rem;
-  font-weight: 800;
-}
-.motion-controls button:disabled {
-  cursor: default;
-  opacity: 0.6;
-}
-.motion-controls button:focus-visible {
-  outline-color: var(--ink);
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .hero-swipe {
     display: block;
     position: absolute;
-    inset: -30% -40%;
+    inset: -30% auto;
+    left: -20%;
+    width: 18%;
     z-index: 5;
     pointer-events: none;
     background: var(--ink);
     border-inline: 1.5rem solid var(--paper);
-    transform: translateX(-130%) skewX(-18deg);
-    animation: phantom-wipe 0.9s cubic-bezier(0.76, 0, 0.24, 1) both;
+    transform: translateX(0) skewX(-18deg);
+    animation: phantom-wipe 0.35s cubic-bezier(0.76, 0, 0.24, 1) both;
   }
   .hero-dots {
     animation: halftone-drift 1s steps(5) 5;
@@ -786,10 +766,10 @@ footer > a:not(.wordmark) {
 }
 @keyframes phantom-wipe {
   from {
-    transform: translateX(-130%) skewX(-18deg);
+    transform: translateX(0) skewX(-18deg);
   }
   to {
-    transform: translateX(130%) skewX(-18deg);
+    transform: translateX(800%) skewX(-18deg);
   }
 }
 @keyframes halftone-drift {
@@ -827,9 +807,6 @@ footer > a:not(.wordmark) {
   margin-top: 1rem;
 }
 @media (prefers-reduced-motion: reduce) {
-  .motion-controls {
-    display: none;
-  }
   .reduced-motion-note {
     display: block;
   }
@@ -1183,7 +1160,7 @@ footer > a:not(.wordmark) {
   background: var(--ink);
 }
 .experience-map > .section-heading,
-.experience-map > .experience-timeline {
+.experience-map > .timeline-map {
   max-width: 1000px;
   margin-inline: auto;
 }
@@ -1197,10 +1174,14 @@ footer > a:not(.wordmark) {
 .experience-map a:focus-visible {
   outline-color: var(--paper);
 }
+.timeline-map {
+  position: relative;
+  margin-top: 3rem;
+}
 .experience-timeline {
   position: relative;
   padding: 0;
-  margin: 3rem 0 0;
+  margin: 0;
   list-style: none;
 }
 .timeline-item {

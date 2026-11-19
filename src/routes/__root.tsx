@@ -1,5 +1,6 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 
+import { labels } from "../data/labels";
 import { SiteLayout } from "../components/site-layout";
 
 import appCss from "../styles.css?url";
@@ -15,12 +16,11 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Gare — One Thing at a Time",
+        title: labels.en.siteName,
       },
       {
         name: "description",
-        content:
-          "Gare’s personal corner of the internet: side projects, CTFs, homelab experiments, games, and notes from the things I’m learning.",
+        content: labels.en.siteDescription,
       },
       { name: "theme-color", content: "#e81932" },
     ],

@@ -1,8 +1,10 @@
+import type { Localized } from "./labels";
+
 export type Project = {
   id: string;
   name: string;
   private: boolean;
-  description: string;
+  description: Localized<string>;
   created_at: string;
   updated_at: string;
   pushed_at: string;
@@ -22,7 +24,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "399337792",
     name: "CTFs",
     private: false,
-    description: "Archive my journey and writeup on CTF Competition",
+    description: {
+      en: "Archive my journey and writeup on CTF Competition",
+      id: "Arsip perjalanan CTF saya dan catatan penyelesaian kompetisi.",
+      ja: "CTFへの挑戦の記録と、大会の解説をまとめたアーカイブです。",
+    },
     created_at: "2021-08-24T04:48:43Z",
     updated_at: "2025-07-31T12:41:05Z",
     pushed_at: "2025-07-31T12:41:00Z",
@@ -39,7 +45,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "679617983",
     name: "dotfiles",
     private: false,
-    description: "My desktop configuration for various tools",
+    description: {
+      en: "My desktop configuration for various tools",
+      id: "Konfigurasi desktop dan berbagai alat yang saya gunakan.",
+      ja: "デスクトップ環境や普段使っているツールの設定です。",
+    },
     created_at: "2023-08-17T08:37:51Z",
     updated_at: "2025-09-06T11:17:27Z",
     pushed_at: "2025-09-06T11:17:23Z",
@@ -56,7 +66,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "841626295",
     name: "minecraft-server",
     private: false,
-    description: "⛏️ Minecraft server provisioning in remote server with Ansible.",
+    description: {
+      en: "⛏️ Minecraft server provisioning in remote server with Ansible.",
+      id: "Menyiapkan server Minecraft di server jarak jauh menggunakan Ansible.",
+      ja: "AnsibleでリモートサーバーにMinecraftサーバーを構築します。",
+    },
     created_at: "2024-08-12T19:35:04Z",
     updated_at: "2024-08-12T19:35:04Z",
     pushed_at: "2024-08-17T13:12:38Z",
@@ -74,8 +88,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "567413873",
     name: "ususbuntu-operating-system",
     private: false,
-    description:
-      "This project is made to fulfill the 1st, 2nd, and 3rd milestone for the Operating System. It is a simple os that can do simple command like ls, mkdir, cp, cd, cat, and mv. It also implemented by using multiprogramming and message passing",
+    description: {
+      en: "This project is made to fulfill the 1st, 2nd, and 3rd milestone for the Operating System. It is a simple os that can do simple command like ls, mkdir, cp, cd, cat, and mv. It also implemented by using multiprogramming and message passing",
+      id: "Sistem operasi sederhana dengan perintah ls, mkdir, cp, cd, cat, dan mv, serta multiprogramming dan pertukaran pesan.",
+      ja: "ls、mkdir、cp、cd、cat、mvを備え、マルチプログラミングとメッセージパッシングに対応したシンプルなOSです。",
+    },
     created_at: "2022-11-17T18:33:36Z",
     updated_at: "2024-06-15T15:57:11Z",
     pushed_at: "2022-11-17T18:35:19Z",
@@ -92,8 +109,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "567415088",
     name: "tcp-over-udp",
     private: false,
-    description:
-      "This repository contains how to simulate TCP connection over UDP socket. It consist of simple server and client, server can send file to a or multiple client. There  are no non builtin library are used for this implementation.",
+    description: {
+      en: "This repository contains how to simulate TCP connection over UDP socket. It consist of simple server and client, server can send file to a or multiple client. There  are no non builtin library are used for this implementation.",
+      id: "Simulasi koneksi TCP melalui soket UDP. Server dapat mengirim berkas ke satu atau beberapa klien tanpa pustaka eksternal.",
+      ja: "UDPソケット上でTCP接続を再現します。外部ライブラリを使わず、サーバーから複数のクライアントへファイルを送信できます。",
+    },
     created_at: "2022-11-17T18:36:59Z",
     updated_at: "2022-11-20T05:02:15Z",
     pushed_at: "2022-11-17T18:51:27Z",
@@ -110,7 +130,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "568314713",
     name: "concurrency-control",
     private: false,
-    description: "Tugas Besar II Manajemen Basis Data 2022",
+    description: {
+      en: "Database Management II course project (2022).",
+      id: "Proyek mata kuliah Manajemen Basis Data II tahun 2022.",
+      ja: "2022年のデータベース管理の授業で制作した並行制御のプロジェクトです。",
+    },
     created_at: "2022-11-20T05:51:44Z",
     updated_at: "2022-12-16T18:30:38Z",
     pushed_at: "2022-12-05T16:06:04Z",
@@ -127,7 +151,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "625803504",
     name: "raft-python",
     private: false,
-    description: "Implemenattion of raft protocol using python",
+    description: {
+      en: "Implemenattion of raft protocol using python",
+      id: "Implementasi protokol Raft menggunakan Python.",
+      ja: "Pythonで実装したRaftプロトコルです。",
+    },
     created_at: "2023-04-10T06:13:38Z",
     updated_at: "2023-10-05T11:42:24Z",
     pushed_at: "2023-05-24T10:54:28Z",
@@ -144,7 +172,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "475285607",
     name: "15-puzzle-solver",
     private: false,
-    description: "This repository is made to fulfill Tugas Kecil 3 Strategi Algoritma 2022",
+    description: {
+      en: "A 15-puzzle solver for an Algorithm Strategies assignment (2022).",
+      id: "Pemecah 15-puzzle untuk tugas Strategi Algoritma tahun 2022.",
+      ja: "2022年のアルゴリズムの授業で制作した15パズルのソルバーです。",
+    },
     created_at: "2022-03-29T04:55:31Z",
     updated_at: "2023-07-31T18:34:06Z",
     pushed_at: "2022-04-04T11:36:52Z",
@@ -161,7 +193,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "406685380",
     name: "Matrix-Calculator",
     private: false,
-    description: "Tugas Besar 1 Aljabar Linear dan Geometri",
+    description: {
+      en: "A matrix calculator for a Linear Algebra and Geometry course project.",
+      id: "Kalkulator matriks untuk proyek Aljabar Linear dan Geometri.",
+      ja: "線形代数と幾何学の授業で制作した行列計算ツールです。",
+    },
     created_at: "2021-09-15T08:57:23Z",
     updated_at: "2023-05-22T03:28:24Z",
     pushed_at: "2021-10-01T06:55:33Z",
@@ -178,7 +214,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "421736853",
     name: "Image-Compression",
     private: false,
-    description: "Tugas Besar 2 Aljabar Linear dan Geometri",
+    description: {
+      en: "An image compression project for Linear Algebra and Geometry.",
+      id: "Proyek kompresi gambar untuk mata kuliah Aljabar Linear dan Geometri.",
+      ja: "線形代数と幾何学の授業で制作した画像圧縮のプロジェクトです。",
+    },
     created_at: "2021-10-27T08:28:50Z",
     updated_at: "2023-05-22T03:31:57Z",
     pushed_at: "2021-11-15T03:00:29Z",
@@ -195,7 +235,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "431822705",
     name: "python-simple-compiler",
     private: false,
-    description: "Tugas Besar Teori Bahasa Formal dan Automata",
+    description: {
+      en: "A simple compiler for a Formal Languages and Automata course project.",
+      id: "Compiler sederhana untuk proyek Teori Bahasa Formal dan Automata.",
+      ja: "形式言語とオートマトンの授業で制作したシンプルなコンパイラです。",
+    },
     created_at: "2021-11-25T11:37:30Z",
     updated_at: "2023-01-26T02:39:03Z",
     pushed_at: "2021-11-24T15:48:04Z",
@@ -212,7 +256,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "580113833",
     name: "Terraform-ECS-Nginx-Cluster",
     private: false,
-    description: "Terraform - Auto Scaling NGINX with ECS Cluster",
+    description: {
+      en: "Terraform - Auto Scaling NGINX with ECS Cluster",
+      id: "Klaster NGINX dengan penskalaan otomatis di ECS menggunakan Terraform.",
+      ja: "Terraformで構築する、自動スケーリング対応のECS上のNGINXクラスターです。",
+    },
     created_at: "2022-12-19T18:52:25Z",
     updated_at: "2023-10-05T11:50:37Z",
     pushed_at: "2022-12-23T11:51:57Z",
@@ -229,7 +277,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "600386764",
     name: "geprek-nim-finder",
     private: false,
-    description: "🍗🔥  Geprek NIM Finder's public repository (est. 2019)",
+    description: {
+      en: "🍗🔥  Geprek NIM Finder's public repository (est. 2019)",
+      id: "Repositori publik Geprek NIM Finder, dibuat pada 2019.",
+      ja: "2019年に制作したGeprek NIM Finderの公開リポジトリです。",
+    },
     created_at: "2023-02-11T10:33:15Z",
     updated_at: "2024-01-05T06:43:36Z",
     pushed_at: "2024-01-18T11:06:01Z",
@@ -246,7 +298,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "631066219",
     name: "simple-multithreaded-rust-webserver",
     private: false,
-    description: "Simple rust webserver ",
+    description: {
+      en: "Simple rust webserver ",
+      id: "Web server sederhana dengan multithreading menggunakan Rust.",
+      ja: "Rustで実装したシンプルなマルチスレッドWebサーバーです。",
+    },
     created_at: "2023-04-21T20:57:08Z",
     updated_at: "2023-10-05T11:42:56Z",
     pushed_at: "2023-04-22T10:48:15Z",
@@ -263,8 +319,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "631534657",
     name: "SIX-ITB-Scrapper",
     private: false,
-    description:
-      "This repository aims to get all of available matakuliah and dosen information from all of prodi and facutly in ITB for Dosen Rank Project. Built using python",
+    description: {
+      en: "This repository aims to get all of available matakuliah and dosen information from all of prodi and facutly in ITB for Dosen Rank Project. Built using python",
+      id: "Mengumpulkan informasi mata kuliah dan dosen dari berbagai program studi ITB untuk proyek Dosen Rank, menggunakan Python.",
+      ja: "Dosen Rankプロジェクト向けに、PythonでITB各学科の授業と教員の情報を収集します。",
+    },
     created_at: "2023-04-23T10:25:44Z",
     updated_at: "2023-04-25T09:49:14Z",
     pushed_at: "2023-04-29T18:59:33Z",
@@ -281,7 +340,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "643078022",
     name: "secure-env",
     private: false,
-    description: "Secure your .env using ElGamal Eliptic Curve Cryptography",
+    description: {
+      en: "Secure your .env using ElGamal Eliptic Curve Cryptography",
+      id: "Melindungi berkas .env dengan kriptografi kurva eliptik ElGamal.",
+      ja: "楕円曲線ElGamal暗号を使って.envファイルを保護します。",
+    },
     created_at: "2023-05-20T03:29:25Z",
     updated_at: "2023-08-16T06:55:38Z",
     pushed_at: "2023-05-20T17:23:15Z",
@@ -299,7 +362,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "419756689",
     name: "Pickup-and-Delivery-Game",
     private: false,
-    description: "Tugas Besar Alstrukdat ",
+    description: {
+      en: "A pickup-and-delivery game built as a course project.",
+      id: "Gim pengambilan dan pengiriman untuk proyek kuliah.",
+      ja: "授業のプロジェクトとして制作した、荷物の集荷と配達を題材にしたゲームです。",
+    },
     created_at: "2021-10-21T14:28:37Z",
     updated_at: "2023-08-31T09:01:09Z",
     pushed_at: "2021-11-18T09:06:00Z",
@@ -316,8 +383,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "461751288",
     name: "convex-hull-implementation",
     private: false,
-    description:
-      "Convex Hull Implementation for Linear Separability Dataset Test with Divide and Conquer",
+    description: {
+      en: "Convex Hull Implementation for Linear Separability Dataset Test with Divide and Conquer",
+      id: "Implementasi convex hull dengan divide and conquer untuk menguji keterpisahan linear dataset.",
+      ja: "分割統治法による凸包の実装を使い、データセットの線形分離可能性を調べます。",
+    },
     created_at: "2022-02-21T07:34:27Z",
     updated_at: "2022-06-14T19:33:30Z",
     pushed_at: "2022-02-27T10:14:35Z",
@@ -334,7 +404,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "514003471",
     name: "df-vcs",
     private: false,
-    description: "Version control system created using bash",
+    description: {
+      en: "Version control system created using bash",
+      id: "Sistem kontrol versi yang dibuat menggunakan Bash.",
+      ja: "Bashで制作したバージョン管理システムです。",
+    },
     created_at: "2022-07-14T18:12:10Z",
     updated_at: "2022-07-18T01:51:48Z",
     pushed_at: "2022-07-15T16:14:18Z",
@@ -352,7 +426,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "579691824",
     name: "nicscraper",
     private: false,
-    description: "NIC Scraper using Go and Goroutines.",
+    description: {
+      en: "NIC Scraper using Go and Goroutines.",
+      id: "Pengumpul data NIC menggunakan Go dan goroutine.",
+      ja: "Goとgoroutineで実装したNICスクレイパーです。",
+    },
     created_at: "2022-12-18T15:01:19Z",
     updated_at: "2023-01-07T14:22:51Z",
     pushed_at: "2023-01-07T14:22:46Z",
@@ -369,7 +447,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "601889952",
     name: "DFT-Parallelization",
     private: false,
-    description: "Paralellization using open-mpi, open-mp, and Cuda",
+    description: {
+      en: "Paralellization using open-mpi, open-mp, and Cuda",
+      id: "Paralelisasi DFT menggunakan Open MPI, OpenMP, dan CUDA.",
+      ja: "Open MPI、OpenMP、CUDAによるDFTの並列化です。",
+    },
     created_at: "2023-02-15T03:21:22Z",
     updated_at: "2023-03-25T14:38:41Z",
     pushed_at: "2023-03-21T16:46:13Z",
@@ -386,7 +468,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "613191788",
     name: "Feed-Forward-Neural-Network",
     private: false,
-    description: "Tugas Besar Machine Learning Bagian A",
+    description: {
+      en: "A feed-forward neural network for a machine learning course project.",
+      id: "Jaringan saraf feed-forward untuk proyek pembelajaran mesin.",
+      ja: "機械学習の授業で制作したフィードフォワードニューラルネットワークです。",
+    },
     created_at: "2023-03-13T04:41:31Z",
     updated_at: "2023-10-05T11:42:44Z",
     pushed_at: "2023-05-03T11:19:32Z",
@@ -403,8 +489,11 @@ export const GITHUB_PROJECTS: Project[] = [
     id: "620438355",
     name: "Extended-Survival-Shooter",
     private: false,
-    description:
-      "This repository contains Tugas besar 2 Platform Based development. Extended survival shooter is a single player game which has a lot of main features, such as story mode, quest, pet, weapons, and lot more!! Made with unity",
+    description: {
+      en: "This repository contains Tugas besar 2 Platform Based development. Extended survival shooter is a single player game which has a lot of main features, such as story mode, quest, pet, weapons, and lot more!! Made with unity",
+      id: "Gim survival shooter pemain tunggal dengan mode cerita, misi, peliharaan, dan senjata, dibuat menggunakan Unity.",
+      ja: "Unityで制作したシングルプレイのサバイバルシューティングゲームです。ストーリーモード、クエスト、ペット、武器などを備えています。",
+    },
     created_at: "2023-03-28T17:22:21Z",
     updated_at: "2023-06-09T20:34:28Z",
     pushed_at: "2023-04-29T20:07:29Z",
@@ -424,7 +513,7 @@ export function searchProjects(query: string) {
   return GITHUB_PROJECTS.filter(
     (project) =>
       !project.private &&
-      `${project.name} ${project.description} ${project.language} ${project.topics.join(" ")}`
+      `${project.name} ${Object.values(project.description).join(" ")} ${project.language} ${project.topics.join(" ")}`
         .toLowerCase()
         .includes(term),
   );

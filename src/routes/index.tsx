@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { animate, stagger, useScopeMotion } from "motion/react";
 import { useSite } from "../components/site-layout";
 import { navIcons } from "../data/nav";
@@ -8,7 +8,6 @@ export const Route = createFileRoute("/")({ component: Home });
 
 export function Home() {
   const animationRoot = useRef<HTMLDivElement>(null);
-  const [intro, setIntro] = useState(0);
   const { t } = useSite();
   useScopeMotion(
     animationRoot,
@@ -19,7 +18,7 @@ export function Home() {
           transform: ["translateX(-120px)", "translateX(8px)", "translateX(0px)"],
           opacity: [0, 1, 1],
         },
-        { delay: stagger(0.12, { startDelay: 0.3 }), duration: 0.6 },
+        { delay: stagger(0.05), duration: 0.45 },
       );
       animate(
         ".hero-art",
@@ -31,12 +30,11 @@ export function Home() {
           ],
           opacity: [0, 1, 1],
         },
-        { delay: 0.45, duration: 1 },
+        { duration: 0.7 },
       );
     },
     {
       matchMedia: "(prefers-reduced-motion: no-preference)",
-      deps: [intro],
       transition: { ease: [0.16, 1, 0.3, 1] },
     },
   );
@@ -44,7 +42,7 @@ export function Home() {
   return (
     <div className="route-page home-page" ref={animationRoot}>
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-swipe" key={intro} aria-hidden="true" />
+        <div className="hero-swipe" aria-hidden="true" />
         <div className="hero-dots" aria-hidden="true" />
         <div className="hero-inner">
           <div className="hero-copy">
@@ -52,26 +50,23 @@ export function Home() {
               <span className="tiny-star">✦</span> {t.identity}
             </p>
             <h1 id="hero-title">
-              <span>ONE THING</span>
+              <span>{t.oneThing}</span>
               <span className="cutout">
-                AT A TIME.
+                {t.atATime}
                 <span className="title-star" aria-hidden="true">
                   ★
                 </span>
               </span>
             </h1>
             <p className="hero-intro">
-              Hey, I’m <strong>Gare.</strong>
+              <strong>{t.greeting}</strong>
               <br />
               {t.intro}
             </p>
-            <p className="hero-note">Things I make, things I learn, and a few side quests.</p>
+            <p className="hero-note">{t.heroNote}</p>
             <Link className="action-link" to="/projects">
               {t.explore} <span aria-hidden="true">✦</span>
             </Link>
-            <div className="motion-controls">
-              <button onClick={() => setIntro((value) => value + 1)}>Replay intro</button>
-            </div>
           </div>
           <div className="hero-art" aria-hidden="true">
             <div className="orbit orbit-one" />
@@ -79,13 +74,13 @@ export function Home() {
             <span className="art-star star-back">★</span>
             <span className="art-star star-front">★</span>
             <div className="calling-card">
-              <span>THE TINKERER</span>
+              <span>{t.cardTitle}</span>
               <strong>GARE</strong>
               <div className="mask">
                 <i />
                 <i />
               </div>
-              <span>BUILD. BREAK. LEARN. REPEAT.</span>
+              <span>{t.cardMotto}</span>
             </div>
             <span className="art-spark spark-one">✦</span>
             <span className="art-spark spark-two">✦</span>
@@ -93,19 +88,16 @@ export function Home() {
         </div>
       </section>
       <section className="home-about" aria-labelledby="about-title">
-        <p className="eyebrow">THE PERSON BEHIND THE HANDLE</p>
+        <p className="eyebrow">{t.homeEyebrow}</p>
         <h2 id="about-title">
           {t.dossier}
           <span>.</span>
         </h2>
+        <p>{t.aboutMe}</p>
         <p>
-          I’m Gare. This is my corner of the internet for side projects, things I’m learning, and
-          whatever catches my curiosity.
-        </p>
-        <p>
-          I’m usually exploring CTF challenges, tinkering with my homelab, or playing Pokémon and
-          Monster Hunter. I collect what I learn in my{" "}
-          <a href="https://garden.mgarebaldhie.com">digital garden</a>.
+          {t.aboutInterests}
+          <a href="https://garden.mgarebaldhie.com">{t.garden}</a>
+          {t.afterGarden}
         </p>
         <div className="social-links">
           {navIcons.map((social) => (
