@@ -340,13 +340,21 @@ export const GITHUB_PROJECTS: Project[] = [
   },
 ];
 
-export function searchProjects(query: string) {
-  const term = query.toLowerCase().trim();
-  return GITHUB_PROJECTS.filter(
-    (project) =>
-      !project.private &&
-      `${project.name} ${Object.values(project.description).join(" ")} ${project.language} ${project.topics.join(" ")}`
-        .toLowerCase()
-        .includes(term),
-  );
+const FEATURED = ["CTFs", "dotfiles", "raft-python"];
+const PUBLIC_PROJECTS = GITHUB_PROJECTS.filter((project) => !project.private);
+
+export function visibleProjects(query: string) {
+  if (query.trim()) {
+    const term = query.toLowerCase().trim();
+    return {
+      projects: PUBLIC_PROJECTS.filter((project) =>
+        `${project.name} ${Object.values(project.description).join(" ")} ${project.language} ${project.topics.join(" ")}`
+          .toLowerCase()
+          .includes(term),
+      ),
+      total: PUBLIC_PROJECTS.length,
+    };
+  }
+  const projects = PUBLIC_PROJECTS.filter((project) => FEATURED.includes(project.name));
+  return { projects, total: projects.length };
 }

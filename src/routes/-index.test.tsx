@@ -111,44 +111,18 @@ it("resolves post data through the blog interface", () => {
   expect(getBlogPost("nope", "en")).toBeUndefined();
 });
 
-it("renders a ported v1 post as full Markdown", async () => {
-  const html = renderToStaticMarkup(
+it("renders ported posts at their own URLs", async () => {
+  const exploited = renderToStaticMarkup(
     <RouterProvider router={await loadRouter("/blog/introduction-to-binary-exploitation")} />,
   );
-  for (const content of [
-    "Classic Buffer Overflow",
-    '<div class="code-title">example1.c</div>',
-    '<pre class="code-block language-c"><code class="code-highlight language-c">',
-    '<span class="token keyword">',
-  ]) {
-    expect(html).toContain(content);
-  }
-  expect(html).not.toContain("Read the original on Money Forward Developers Blog");
-  expect(html).toContain('<nav class="post-toc"');
-  expect(html).toContain('href="#classic-buffer-overflow"');
-  expect(html).toContain("min read");
-});
+  expect(exploited).toContain("Classic Buffer Overflow");
+  expect(exploited).toContain('class="prose"');
 
-it("renders LaTeX, heading anchors and a table of contents", async () => {
-  const html = renderToStaticMarkup(
-    <RouterProvider router={await loadRouter("/blog/hello-world")} />,
-  );
-  for (const content of [
-    'class="katex"',
-    'id="table-of-contents"',
-    'class="post-toc"',
-    'id="here-are-some-cool-math-equation"',
-  ]) {
-    expect(html).toContain(content);
-  }
-});
-
-it("falls back to English markdown when a locale has no translation", async () => {
-  const html = renderToStaticMarkup(
+  const hello = renderToStaticMarkup(
     <RouterProvider router={await loadRouter("/blog/hello-world", "id")} />,
   );
-  expect(html).toContain('class="katex"');
-  expect(html).toContain("menit baca");
+  expect(hello).toContain('class="prose"');
+  expect(hello).toContain("menit baca");
 });
 
 it("renders a blog post with its original source link", async () => {

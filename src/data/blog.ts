@@ -1,17 +1,6 @@
-import type { Locale, Localized } from "./labels";
+import type { Locale } from "./labels";
 import { LOCAL_POSTS } from "./local-posts";
-
-export type BlogPost = {
-  slug: string;
-  title: string;
-  date: string;
-  tags: string[];
-  url: string;
-  summary: Localized<string>;
-  takeaways: Localized<string[]>;
-  readingTime?: Localized<number>;
-  body?: Localized<string>;
-};
+import type { BlogPost } from "./post-types";
 
 const BLOG_POSTS: BlogPost[] = [
   {
