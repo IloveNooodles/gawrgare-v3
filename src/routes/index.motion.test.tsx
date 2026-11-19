@@ -183,3 +183,22 @@ it("disables page entrances under system reduced motion", async () => {
     /translate|rotate|scale/,
   );
 });
+
+it("starts the career timeline with Now and follows with earlier roles", async () => {
+  await act(async () => {
+    await router.navigate({ to: "/experience" });
+  });
+  const roles = Array.from(container.querySelectorAll("#experience article"));
+  expect(roles.map((role) => role.querySelector("h2")?.textContent)).toEqual([
+    "Money Forward, Inc.",
+    "MatchMade",
+    "Makmur",
+    "Garena",
+    "Sayurbox",
+    "Internnet Indonesia",
+  ]);
+  expect(roles[0]?.querySelector("time")?.dateTime).toBe("2024-11");
+  expect(roles.at(-1)?.querySelector("time")?.dateTime).toBe("2021-10");
+  expect(roles[0]?.textContent).toContain("Now");
+  expect(roles.slice(1).some((role) => role.textContent?.includes("Now"))).toBe(false);
+});

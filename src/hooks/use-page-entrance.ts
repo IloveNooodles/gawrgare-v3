@@ -15,17 +15,21 @@ export function usePageEntrance(page: "experience" | "projects" | "awards") {
         { duration: 0.5 },
       );
       if (page === "experience") {
-        animate(
-          ".experience-row",
-          {
-            transform: ["translateX(-64px)", "translateX(6px)", "translateX(0px)"],
-            opacity: [0, 1, 1],
-          },
-          {
-            delay: stagger(0.07, { startDelay: 0.15 }),
-            duration: 0.55,
-          },
-        );
+        root.current?.querySelectorAll(".experience-row").forEach((row, index) => {
+          const direction = index % 2 === 0 ? -1 : 1;
+          animate(
+            row,
+            {
+              transform: [
+                `translateX(${direction * 48}px)`,
+                `translateX(${-direction * 4}px)`,
+                "translateX(0px)",
+              ],
+              opacity: [0, 1, 1],
+            },
+            { delay: 0.15 + index * 0.08, duration: 0.55 },
+          );
+        });
       } else if (page === "projects") {
         animate(
           ".project-row",

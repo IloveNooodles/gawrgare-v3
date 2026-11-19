@@ -40,7 +40,7 @@ it("renders the six selected roles and retains the key results", async () => {
     "Sayurbox",
     "$1,591+ per month",
     "$1,500 per month",
-    "Present",
+    "Now",
     "400,000+ users",
     "Full work history on LinkedIn",
   ]) {
