@@ -162,7 +162,8 @@ input:focus-visible {
   width: max-content;
   background: var(--paper);
   padding: 0.05em 0.25em 0.16em 0.13em;
-  transform: rotate(-4deg) translateX(-0.07em);
+  rotate: -4deg;
+  translate: -0.07em 0;
   margin: 0.12em 0 0.2em;
   box-shadow: 7px 7px 0 var(--ink);
 }
@@ -492,18 +493,19 @@ input:focus-visible {
   margin: 1rem 0 0;
 }
 .project-row {
+  position: relative;
   display: flex;
   gap: 2rem;
   justify-content: space-between;
   padding: 2rem 1rem 2rem 0;
   border-bottom: 1px solid var(--line);
   transition:
-    padding 0.2s,
+    transform 0.2s,
     background 0.2s;
 }
 .project-row:hover {
   background: #1c1c20;
-  padding-left: 1rem;
+  transform: translateX(0.35rem);
 }
 .project-language {
   color: var(--red);
@@ -816,4 +818,83 @@ footer > a:not(.wordmark) {
 .project-tags span {
   max-width: 100%;
   overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .art-spark {
+    animation: spark-stamp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+  }
+  .spark-two {
+    animation-delay: 0.85s;
+  }
+  .title-star {
+    animation: star-turn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+  }
+  .calling-card {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .award-row {
+    transition:
+      translate 0.18s,
+      background 0.18s;
+  }
+  .section-nav a {
+    position: relative;
+    isolation: isolate;
+    transition: color 0.15s;
+  }
+  .section-nav a::before {
+    content: "";
+    position: absolute;
+    inset: 0 -0.5rem;
+    z-index: -1;
+    background: var(--ink);
+    transform: skew(-12deg) scaleX(0);
+    transform-origin: left;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .section-nav a:is(:hover, :focus-visible) {
+    color: var(--paper);
+    text-decoration: none;
+  }
+  .section-nav a:is(:hover, :focus-visible)::before {
+    transform: skew(-12deg) scaleX(1);
+  }
+  .project-row:is(:hover, :focus-visible) h3 {
+    color: var(--red);
+  }
+  .award-row:is(:hover, :focus-visible) {
+    translate: 0.35rem 0;
+    background: #1c1c20;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hero-art:hover .calling-card {
+      transform: rotate(6deg) translateY(-8px);
+    }
+  }
+}
+
+@keyframes spark-stamp {
+  0% {
+    scale: 0;
+    opacity: 0;
+  }
+  65% {
+    scale: 1.2;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+@keyframes star-turn {
+  from {
+    rotate: -120deg;
+    scale: 0.4;
+  }
+  to {
+    rotate: 0deg;
+    scale: 1;
+  }
 }

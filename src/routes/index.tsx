@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { animate, inView, stagger, useScopeMotion } from "motion/react";
 import { awards } from "../data/awards";
 import { experiences } from "../data/experience";
 import { navIcons } from "../data/nav";
@@ -46,12 +47,46 @@ const labels = {
 };
 
 export function Home() {
+  const animationRoot = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState<keyof typeof labels>("en");
   const [query, setQuery] = useState("");
   const t = labels[locale];
   const projects = searchProjects(query);
+
+  useScopeMotion(
+    animationRoot,
+    () => {
+      animate(
+        ".hero-copy > .eyebrow, .hero h1 > span, .hero-intro, .action-link",
+        { x: [-48, 0], opacity: [0, 1] },
+        { delay: stagger(0.075), duration: 0.45 },
+      );
+      animate(
+        ".hero-art",
+        { x: [64, 0], rotate: [-12, 3, 0], scale: [0.8, 1.03, 1], opacity: [0, 1] },
+        { delay: 0.2, duration: 0.8 },
+      );
+      animate(
+        ".section-nav a",
+        { y: [16, 0], opacity: [0, 1] },
+        { delay: stagger(0.06, { startDelay: 0.5 }), duration: 0.3 },
+      );
+      inView(
+        ".section-heading, .about-layout, .experience-row, .award-row",
+        (element) => {
+          animate(element, { y: [24, 0], opacity: [0, 1] }, { duration: 0.45 });
+        },
+        { amount: 0.15 },
+      );
+    },
+    {
+      matchMedia: "(prefers-reduced-motion: no-preference)",
+      transition: { ease: [0.16, 1, 0.3, 1] },
+    },
+  );
+
   return (
-    <div className="site-shell" lang={locale}>
+    <div className="site-shell" lang={locale} ref={animationRoot}>
       <a className="skip-link" href="#main">
         Skip to content
       </a>

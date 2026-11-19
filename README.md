@@ -11,9 +11,11 @@ vp run build
 vp run preview
 ```
 
-Content lives in `src/data/`: projects, experience, awards, and social links copied from v2. The homepage lives in `src/routes/index.tsx`; the visual theme is in `src/styles.css`. Fonts are served locally from `public/fonts/` and were copied from v2. No UI dependencies were added.
+Content lives in `src/data/`: projects, experience, awards, and social links copied from v2. The homepage lives in `src/routes/index.tsx`; the visual theme is in `src/styles.css`. Fonts are served locally from `public/fonts/` and were copied from v2. Animations use Motion, installed with `vp add motion`.
 
 English, Indonesian, and Japanese controls translate the interface, matching v2’s scope; biography and portfolio descriptions remain in English. Project search matches names, descriptions, languages, and topics. Repository metadata is the v2 snapshot, not a live GitHub feed.
+
+The homepage uses [Motion’s scoped React animations](https://motion.dev/docs/react-use-scope-motion) for staggered hero text, the calling-card entrance, and once-per-visit scroll reveals. CSS adds star accents and hover effects. Effects settle rather than looping, respect `prefers-reduced-motion`, and clean up when the page unmounts or the preference changes. Server-rendered content remains visible without JavaScript.
 
 V2 contained no blog posts or article routes, so this migration preserves the portfolio without inventing posts. The original starter documentation follows.
 
