@@ -15,12 +15,13 @@ export function useSite() {
 }
 
 const pages: {
-  to: "/" | "/experience" | "/projects" | "/awards";
-  label: "home" | "experiences" | "projects" | "awards";
+  to: "/" | "/experience" | "/projects" | "/blog" | "/awards";
+  label: "home" | "experiences" | "projects" | "blog" | "awards";
 }[] = [
   { to: "/", label: "home" },
   { to: "/experience", label: "experiences" },
   { to: "/projects", label: "projects" },
+  { to: "/blog", label: "blog" },
   { to: "/awards", label: "awards" },
 ];
 const languages: Locale[] = ["en", "id", "ja"];

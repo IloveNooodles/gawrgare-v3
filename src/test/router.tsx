@@ -3,7 +3,10 @@ import type { Locale } from "../data/labels";
 import { getRouter } from "../router";
 import type { FileRoutesByTo } from "../routeTree.gen";
 
-export async function loadRouter(path: keyof FileRoutesByTo = "/", locale?: Locale) {
+export async function loadRouter(
+  path: keyof FileRoutesByTo | `/blog/${string}` = "/",
+  locale?: Locale,
+) {
   const router = getRouter();
   router.update({
     history: createMemoryHistory({ initialEntries: [locale ? `${path}?lang=${locale}` : path] }),

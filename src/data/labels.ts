@@ -3,6 +3,7 @@ const en = {
   projects: "Projects",
   experiences: "Experience",
   awards: "Awards",
+  blog: "Blog",
   siteName: "Gare’s Personal Space",
   siteDescription:
     "Gare’s personal corner of the internet: side projects, low-level systems, homelab experiments, games, and notes from the things I’m learning.",
@@ -51,6 +52,14 @@ const en = {
   awardsEyebrow: "A FEW SIDE QUESTS COMPLETED",
   place: "Place {count}",
   awardScope: { National: "National", International: "International" },
+  blogEyebrow: "NOTES FROM THE FIELD",
+  blogStamp: "FIELD NOTES",
+  blogIntro:
+    "Longer notes from the workbench — Kubernetes, editors, and the things I learn along the way.",
+  backToBlog: "Back to all posts",
+  originalPost: "Read the original on Money Forward Developers Blog",
+  inThisPost: "In this post",
+  postNotFound: "That post is not in the archive.",
 };
 
 const id: typeof en = {
@@ -58,6 +67,7 @@ const id: typeof en = {
   projects: "Proyek",
   experiences: "Pengalaman",
   awards: "Prestasi",
+  blog: "Blog",
   siteName: "Gare’s Personal Space",
   siteDescription:
     "Ruang pribadi Gare di internet: proyek sampingan, sistem tingkat rendah, eksperimen homelab, gim, dan catatan hal-hal yang sedang saya pelajari.",
@@ -106,6 +116,14 @@ const id: typeof en = {
   awardsEyebrow: "BEBERAPA MISI SAMPINGAN TUNTAS",
   place: "Peringkat {count}",
   awardScope: { National: "Nasional", International: "Internasional" },
+  blogEyebrow: "CATATAN DARI LAPANGAN",
+  blogStamp: "CATATAN LAPANGAN",
+  blogIntro:
+    "Catatan panjang dari meja kerja — Kubernetes, editor, dan hal-hal yang saya pelajari di jalan.",
+  backToBlog: "Kembali ke semua tulisan",
+  originalPost: "Baca versi asli di Money Forward Developers Blog",
+  inThisPost: "Dalam tulisan ini",
+  postNotFound: "Tulisan itu tidak ada di arsip.",
 };
 
 const ja: typeof en = {
@@ -113,6 +131,7 @@ const ja: typeof en = {
   projects: "プロジェクト",
   experiences: "経験",
   awards: "受賞歴",
+  blog: "ブログ",
   siteName: "Gare’s Personal Space",
   siteDescription:
     "Gareの個人サイト。個人開発、低レイヤー技術、ホームラボでの実験、ゲーム、学んだことの記録をまとめています。",
@@ -161,6 +180,13 @@ const ja: typeof en = {
   awardsEyebrow: "クリアしたサイドクエスト",
   place: "{count}位",
   awardScope: { National: "国内", International: "国際" },
+  blogEyebrow: "現場からのノート",
+  blogStamp: "フィールドノート",
+  blogIntro: "作業台から届く長いメモ — Kubernetes、エディター、そして学んだこと。",
+  backToBlog: "記事一覧へ戻る",
+  originalPost: "Money Forward Developers Blog の原文を読む",
+  inThisPost: "この記事の内容",
+  postNotFound: "その記事はアーカイブにありません。",
 };
 
 export const labels = { en, id, ja };

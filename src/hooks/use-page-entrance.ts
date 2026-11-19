@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { animate, stagger, useScopeMotion } from "motion/react";
 
-export function usePageEntrance(page: "experience" | "projects" | "awards") {
+export function usePageEntrance(page: "experience" | "projects" | "blog" | "awards") {
   const root = useRef<HTMLElement>(null);
   useScopeMotion(
     root,
@@ -50,6 +50,18 @@ export function usePageEntrance(page: "experience" | "projects" | "awards") {
           ".search-field",
           { transform: ["translateX(-40px)", "translateX(0px)"], opacity: [0, 1] },
           { duration: 0.45, delay: 0.1 },
+        );
+      } else if (page === "blog") {
+        animate(
+          ".blog-row",
+          {
+            transform: ["translateY(32px) rotate(-1deg)", "translateY(0px) rotate(0deg)"],
+            opacity: [0, 1],
+          },
+          {
+            delay: stagger(0.08, { startDelay: 0.15 }),
+            duration: 0.5,
+          },
         );
       } else {
         animate(
