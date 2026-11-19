@@ -11,11 +11,22 @@ vp run build
 vp run preview
 ```
 
-Content lives in `src/data/`: projects, experience, awards, and social links copied from v2. The bio and education summary were refreshed from the supplied `linkedin.html` snapshot. Work history uses the expanded `gawrgare-linkedin-experience.html` snapshot, with three concise points for the main engineering roles and one or two for earlier and community roles. Key impact figures remain visible, with a link to LinkedIn for the full history. The homepage lives in `src/routes/index.tsx`; the visual theme is in `src/styles.css`. Fonts are served locally from `public/fonts/` and were copied from v2. Animations use Motion, installed with `vp add motion`.
+The site uses four TanStack Start routes with a shared Persona-inspired sidebar:
+
+| Route         | Content                                                                               |
+| ------------- | ------------------------------------------------------------------------------------- |
+| `/`           | Animated hero, personal introduction, interests, and social links                     |
+| `/experience` | Six selected professional roles and a link to the full LinkedIn history               |
+| `/projects`   | Three featured repositories; search covers every public repository in the v2 snapshot |
+| `/awards`     | CTF achievements                                                                      |
+
+An original dagger cursor strikes into place on the active menu item. The sidebar stays on the left on desktop and becomes an expandable menu on mobile. The language choice carries across routes. The layout lives in `src/components/site-layout.tsx`, route pages in `src/routes/`, content in `src/data/`, and styles in `src/styles.css`.
+
+Bio content came from `linkedin.html`; selected experience came from `gawrgare-linkedin-experience.html`. Money Forward and MatchMade have three concise points each; older roles have one or two. Fonts are served locally from `public/fonts/`. Animations use Motion, installed with `vp add motion`.
 
 English, Indonesian, and Japanese controls translate the interface, matching v2’s scope; biography and portfolio descriptions remain in English. Project search matches names, descriptions, languages, and topics. Repository metadata is the v2 snapshot, not a live GitHub feed.
 
-The homepage uses [Motion’s scoped React animations](https://motion.dev/docs/react-use-scope-motion) for staggered hero text, the calling-card entrance, and once-per-visit scroll reveals. CSS adds a diagonal intro wipe, looping star movement, halftone drift, floating card, and hover accents. Use **Replay intro** to see the entrance again or **Pause motion** to stop the effects. System reduced-motion settings disable animations and show an explanation in place of the controls. Motion cleans up when the page unmounts or the preference changes. Server-rendered content remains visible without JavaScript.
+The homepage uses [Motion’s scoped React animations](https://motion.dev/docs/react-use-scope-motion) for staggered hero text and the calling-card entrance. Each route starts its entrance after its content mounts: Experience slides in from the left, Projects stamps into place, and Awards fans in from the right. CSS adds a diagonal hero wipe, star movement, halftone drift, and a floating card; decorative effects settle within five seconds. **Replay intro** restarts the home entrance. System reduced-motion settings disable animations, and Motion cleans up when a page unmounts or the preference changes. Server-rendered content stays visible without JavaScript.
 
 V2 contained no blog posts or article routes, so this migration preserves the portfolio without inventing posts. The original starter documentation follows.
 

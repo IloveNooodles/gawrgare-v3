@@ -1,5 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 
+import { SiteLayout } from "../components/site-layout";
+
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -13,12 +15,12 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Gare — Software Engineer III & CTF Player",
+        title: "Gare — One Thing at a Time",
       },
       {
         name: "description",
         content:
-          "Muhammad Garebaldhie ER Rahman. Software Engineer III at Money Forward in Tokyo, building backend systems and infrastructure. CTF player and homelab enthusiast.",
+          "Gare’s personal corner of the internet: side projects, CTFs, homelab experiments, games, and notes from the things I’m learning.",
       },
       { name: "theme-color", content: "#e81932" },
     ],
@@ -29,6 +31,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  component: SiteLayout,
   shellComponent: RootDocument,
 });
 

@@ -36,28 +36,6 @@ export const experiences: Experience[] = [
     url: "https://www.matchmade.io",
   },
   {
-    name: "Institut Teknologi Bandung",
-    title: "Distributed System Laboratory & Programming Fundamentals Assistant",
-    year_start: 2022,
-    year_end: 2024,
-    url: "https://www.linkedin.com/school/14702/",
-    tag: ["Distributed Systems", "Programming Fundamentals"],
-    points: [
-      "I helped students with distributed systems and programming fundamentals as a laboratory assistant.",
-    ],
-  },
-  {
-    name: "Bangkit Academy",
-    title: "Cloud Computing Cohort",
-    year_start: 2023,
-    year_end: 2023,
-    url: "https://www.linkedin.com/company/31509534/",
-    tag: ["Terraform", "Google Cloud Platform"],
-    points: [
-      "I studied cloud computing through a remote apprenticeship, working with Terraform and Google Cloud.",
-    ],
-  },
-  {
     name: "Internnet Indonesia",
     title: "Back End Developer → Lead Software Engineer",
     year_start: 2021,
@@ -82,42 +60,6 @@ export const experiences: Experience[] = [
     url: "https://www.makmur.id/id",
   },
   {
-    name: "Stealth Startup",
-    title: "Software Engineer (contract)",
-    year_start: 2023,
-    year_end: 2023,
-    url: "https://www.linkedin.com/company/18583501/",
-    tag: ["Go", "MongoDB", "Supabase Auth"],
-    points: [
-      "I designed the product data model and API contracts.",
-      "Added authentication with Supabase and stored product data in MongoDB.",
-    ],
-  },
-  {
-    name: "Himpunan Mahasiswa Informatika (HMIF) ITB",
-    title: "Staff → Deputy Head of Competition and Community",
-    year_start: 2021,
-    year_end: 2023,
-    url: "https://www.linkedin.com/company/13736048/",
-    tag: ["Leadership", "Capture The Flag"],
-    points: [
-      "I led about 36 people across five tech communities.",
-      "Organized competition training and created CTF learning materials.",
-    ],
-  },
-  {
-    name: "ARKAVIDIA",
-    title: "Vice Head of Arkalogica",
-    year_start: 2022,
-    year_end: 2023,
-    url: "https://www.linkedin.com/company/14464437/",
-    tag: ["Leadership", "Moodle", "Google Cloud Platform"],
-    points: [
-      "I led an 18-person team to organize a high-school logic and maths competition.",
-      "Built the competition’s Moodle platform and deployed it on Google Cloud.",
-    ],
-  },
-  {
     name: "Garena",
     year_start: 2022,
     title: "Software Engineer (internship)",
@@ -130,15 +72,6 @@ export const experiences: Experience[] = [
     url: "https://garena.co.id/",
   },
   {
-    name: "Developer Student Club ITB",
-    title: "Member → Curriculum Core Team & Head of Curriculum",
-    year_start: 2020,
-    year_end: 2022,
-    url: "https://www.linkedin.com/company/68063121/",
-    tag: ["Leadership", "Firebase", "Google Cloud Platform"],
-    points: ["I helped create workshops on Google technologies and led the curriculum team."],
-  },
-  {
     name: "Sayurbox",
     title: "Software Development Engineer (internship)",
     year_start: 2021,
@@ -149,25 +82,5 @@ export const experiences: Experience[] = [
       "Built mobile app features for promotions, loyalty, and accounts with React Native.",
     ],
     url: "https://www.sayurbox.com/",
-  },
-  {
-    name: "Mile Zero Project",
-    title: "Hackathon Officer",
-    year_start: 2021,
-    year_end: 2022,
-    url: "https://www.linkedin.com/company/69612946/",
-    tag: ["Event Planning", "Communication"],
-    points: ["I helped organize hackathons and moderated training for 70+ participants."],
-  },
-  {
-    name: "Comlabs-USDI ITB",
-    title: "Computer Lab Assistant",
-    year_start: 2021,
-    year_end: 2022,
-    url: "https://www.linkedin.com/company/354854/",
-    tag: ["Python", "Algorithms"],
-    points: [
-      "I guided 70+ participants through Python practicums after being selected from 200+ applicants.",
-    ],
   },
 ];

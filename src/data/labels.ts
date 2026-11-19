@@ -1,0 +1,43 @@
+export const labels = {
+  en: {
+    home: "Home",
+    projects: "Projects",
+    experiences: "Experience",
+    awards: "Awards",
+    identity: "Tinkerer / CTF player",
+    present: "Present",
+    intro: "A little bit of code. A little bit of chaos.",
+    explore: "Explore my work",
+    dossier: "A little about me",
+    search: "Search projects",
+    empty: "No projects found. Try another search.",
+  },
+  id: {
+    home: "Beranda",
+    projects: "Projek",
+    experiences: "Pengalaman",
+    awards: "Prestasi",
+    identity: "Suka ngoprek / Pemain CTF",
+    present: "Sekarang",
+    intro: "Sedikit kode. Sedikit kekacauan.",
+    explore: "Jelajahi karya saya",
+    dossier: "Sedikit tentang saya",
+    search: "Cari projek",
+    empty: "Projek tidak ditemukan. Coba pencarian lain.",
+  },
+  ja: {
+    home: "ホーム",
+    projects: "プロジェクト",
+    experiences: "経験",
+    awards: "賞",
+    identity: "ものづくり / CTFプレイヤー",
+    present: "現在",
+    intro: "少しのコード。少しのカオス。",
+    explore: "作品を見る",
+    dossier: "少しだけ自己紹介",
+    search: "プロジェクトを検索",
+    empty: "プロジェクトが見つかりません。別の検索をお試しください。",
+  },
+};
+
+export type Locale = keyof typeof labels;

@@ -1,0 +1,45 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { usePageEntrance } from "../hooks/use-page-entrance";
+import { useSite } from "../components/site-layout";
+import { awards } from "../data/awards";
+
+export const Route = createFileRoute("/awards")({
+  component: Awards,
+  head: () => ({ meta: [{ title: "Awards — Gare" }] }),
+});
+
+export function Awards() {
+  const { t } = useSite();
+  const entrance = usePageEntrance("awards");
+  return (
+    <section ref={entrance} id="awards" className="content-section awards-section route-page">
+      <div className="section-heading">
+        <p className="eyebrow">A FEW SIDE QUESTS COMPLETED</p>
+        <h1>
+          {t.awards}
+          <span>.</span>
+        </h1>
+      </div>
+      <div className="award-list">
+        {awards.map((award) => (
+          <a
+            href={award.url}
+            className="award-row"
+            key={award.name}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="award-place">#{award.place}</span>
+            <div>
+              <h2>{award.name}</h2>
+              <p>
+                {award.organizer} · {award.scope}
+              </p>
+            </div>
+            <span className="award-year">{award.year}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
